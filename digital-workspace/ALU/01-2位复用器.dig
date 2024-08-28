@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<circuit>
+  <version>2</version>
+  <attributes/>
+  <visualElements>
+    <visualElement>
+      <elementName>01-1位复用器.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="60"/>
+    </visualElement>
+    <visualElement>
+      <elementName>01-1位复用器.dig</elementName>
+      <elementAttributes/>
+      <pos x="300" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>sel</string>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
+        </entry>
+        <entry>
+          <string>Bits</string>
+          <int>2</int>
+        </entry>
+      </elementAttributes>
+      <pos x="120" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Splitter</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Input Splitting</string>
+          <string>2</string>
+        </entry>
+        <entry>
+          <string>Output Splitting</string>
+          <string>1,1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="120" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>sel0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="160" y="260"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>NetName</string>
+          <string>sel1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="160" y="280"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="220" y="40"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="220" y="80"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="220" y="140"/>
+    </visualElement>
+    <visualElement>
+      <elementName>In</elementName>
+      <elementAttributes/>
+      <pos x="220" y="180"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>sel0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="100"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>sel1</string>
+        </entry>
+      </elementAttributes>
+      <pos x="420" y="160"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Tunnel</elementName>
+      <elementAttributes>
+        <entry>
+          <string>rotation</string>
+          <rotation rotation="2"/>
+        </entry>
+        <entry>
+          <string>NetName</string>
+          <string>sel0</string>
+        </entry>
+      </elementAttributes>
+      <pos x="280" y="200"/>
+    </visualElement>
+    <visualElement>
+      <elementName>01-1位复用器.dig</elementName>
+      <elementAttributes/>
+      <pos x="440" y="120"/>
+    </visualElement>
+    <visualElement>
+      <elementName>Out</elementName>
+      <elementAttributes>
+        <entry>
+          <string>Label</string>
+          <string>S</string>
+        </entry>
+        <entry>
+          <string>intFormat</string>
+          <intFormat>dec</intFormat>
+        </entry>
+      </elementAttributes>
+      <pos x="560" y="140"/>
+    </visualElement>
+  </visualElements>
+  <wires>
+    <wire>
+      <p1 x="220" y="80"/>
+      <p2 x="300" y="80"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="80"/>
+      <p2 x="380" y="80"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="160"/>
+      <p2 x="300" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="420" y="160"/>
+      <p2 x="440" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="140" y="260"/>
+      <p2 x="160" y="260"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="180"/>
+      <p2 x="300" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="360" y="180"/>
+      <p2 x="380" y="180"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="100"/>
+      <p2 x="300" y="100"/>
+    </wire>
+    <wire>
+      <p1 x="140" y="280"/>
+      <p2 x="160" y="280"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="40"/>
+      <p2 x="240" y="40"/>
+    </wire>
+    <wire>
+      <p1 x="280" y="200"/>
+      <p2 x="300" y="200"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="120"/>
+      <p2 x="440" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="60"/>
+      <p2 x="300" y="60"/>
+    </wire>
+    <wire>
+      <p1 x="220" y="140"/>
+      <p2 x="240" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="140"/>
+      <p2 x="440" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="500" y="140"/>
+      <p2 x="560" y="140"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="40"/>
+      <p2 x="240" y="60"/>
+    </wire>
+    <wire>
+      <p1 x="240" y="140"/>
+      <p2 x="240" y="160"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="80"/>
+      <p2 x="380" y="120"/>
+    </wire>
+    <wire>
+      <p1 x="380" y="140"/>
+      <p2 x="380" y="180"/>
+    </wire>
+  </wires>
+  <measurementOrdering/>
+</circuit>
