@@ -1,0 +1,41 @@
+静态库和动态库
+
+
+// 预处理：处理所有预处理命名，包括宏定义、条件编译指令、文件包含指令
+gcc -E 01_hello.c -o 01_hello.i
+
+// 编译 ：进行词法分析、语法分析、语义分析后，将代码翻译成汇编指令
+gcc -S 01_hello.i -o 01_hello.s
+
+// 汇编 :将汇编指令翻译成机器指令，也就是二进制，形成目标文件
+gcc -c 01_hello.s -o 01_hello.o
+
+// 链接：将多个目标文件进行链接，得到一个程序最后的执行文件
+gcc 01_hello.o -o 01_hello
+
+
+// 静态库的制作
+// 1.将file.c 编译成 file.o
+// gcc -c file.c -o file.o
+// 2.将file.o生成静态库
+// ar -rs file.a file.o
+
+// ar 命令用于制作静态库的命令,可以使用一些常用的选项
+// -s:将目标文件的索引符号添加到库中
+// -r:在库中更新文件或添加新的文件
+
+gcc -c mymax.c -o mymax.o
+
+ar -rs libmymax.a mymax.o
+
+
+// 静态库在链接中使用时需要指定头文件的位置与静态库的位置
+// -I:指定头文件
+// -L:指定库的位置
+// -l:指定链接库的名字
+// 例:gcc main.c -I ./lib -L ./lib -l math
+// gcc -I. -L. main.c -l mymax -o main(前面的lib不用写 libmymax)
+
+// gcc编译器默认搜索头文件与库文件的路径
+// `/usr/include为头文件默认路径
+// `/usr/lib与/lib为库的默认路径

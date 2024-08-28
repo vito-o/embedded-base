@@ -1,0 +1,6 @@
+OBJ_A = A
+OBJ_B = $(OBJ_A) B
+OBJ_A = AA
+# OBJ_B中要的OBJ_A的值，会在所有代码便利完毕后，用最后一个
+all:
+	@echo "${OBJ_B}"

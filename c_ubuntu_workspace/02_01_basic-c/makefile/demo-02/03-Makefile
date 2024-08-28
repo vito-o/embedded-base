@@ -1,0 +1,6 @@
+# ?= 就是个默认值
+VAR := B
+VAR ?= A
+
+all:
+	@echo "${VAR}"

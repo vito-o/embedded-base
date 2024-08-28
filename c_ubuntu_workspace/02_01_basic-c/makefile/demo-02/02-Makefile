@@ -1,0 +1,7 @@
+OBJ_A := A
+OBJ_B := $(OBJ_A) B
+# := 当前遇到的是什么值，就是什么值，后面的不会对当前影响
+OBJ_A := AA
+
+all:
+	@echo "${OBJ_B}"
