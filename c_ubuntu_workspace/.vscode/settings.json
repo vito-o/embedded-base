@@ -8,6 +8,9 @@
         "msg.h": "c",
         "shm.h": "c",
         "wait.h": "c",
-        "poll.h": "c"
+        "poll.h": "c",
+        "stdio.h": "c",
+        "string": "c",
+        "string.h": "c"
     }
 }

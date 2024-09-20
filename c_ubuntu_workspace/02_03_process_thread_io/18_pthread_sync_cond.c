@@ -20,7 +20,7 @@ void *thread_handler(void *arg)
         pthread_mutex_lock(&mtx);
         printf("线程 [%ld] 生产一个产品，产品数量为：%d\n", pthread_self(), ++number);
         pthread_mutex_unlock(&mtx);
-        pthread_cond_signal(&cond);
+        pthread_cond_signal(&cond); //唤醒线程
     }
 
     pthread_exit((void *) 0);
