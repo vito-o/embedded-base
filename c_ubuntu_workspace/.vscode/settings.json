@@ -16,6 +16,10 @@
         "inet.h": "c",
         "socket.h": "c",
         "in.h": "c",
-        "pthread.h": "c"
+        "pthread.h": "c",
+        "jpeglib.h": "c",
+        "server.h": "c",
+        "error.h": "c",
+        "global.h": "c"
     }
 }

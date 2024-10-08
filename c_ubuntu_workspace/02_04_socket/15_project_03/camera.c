@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "global.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,8 +10,13 @@
 #include <linux/videodev2.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
-
 #include <jpeglib.h>
+#include <sys/select.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <string.h>
+#include <unistd.h>
+#include <errno.h>
 
 static struct camera_t *camera_data;
 static int n_buffer;
@@ -169,6 +175,49 @@ int start_camera(int fd)
     return 0;
 }
 
+void *start_capturing(void *arg)
+{
+    // 开始采集数据.
+    int fd = (int)arg;
+    enum v4l2_buf_type type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    if (0 > ioctl(fd, VIDIOC_STREAMON, &type)){
+        perror("VIDIOC_STREAMON failure!");
+        return NULL;
+    }
+
+    fd_set fds;
+    struct timeval tv = {
+        .tv_sec = 5,
+        .tv_usec = 0,
+    };
+	while(global.capture) {
+        FD_ZERO(&fds);
+        FD_SET(fd, &fds);
+
+        int r = select(fd + 1, &fds, NULL, NULL, &tv);
+        if (-1 == r){
+            if (EINTR == errno)
+                continue;
+
+            perror("Fail to select");
+            break;
+        }
+
+        if (0 == r){
+            //printf(stderr, "select Timeout\n");
+            continue;
+        }
+
+        if (0 != read_frame(fd)){
+            printf("read_frame() error\n");
+            continue;
+        }
+    }
+
+    pthread_exit(NULL);
+}
+
+
 int read_camera(int fd)
 {
     struct v4l2_buffer buf;
@@ -200,6 +249,46 @@ int read_camera(int fd)
     return 0;
 }
 
+int read_frame(int fd)
+{
+    struct v4l2_buffer buf;
+    buf.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+    buf.memory = V4L2_MEMORY_MMAP;
+    if (0 > ioctl(fd, VIDIOC_DQBUF, &buf)){
+        perror("VIDIOC_DQBUF failure!");
+        return -1;
+    }
+
+    //assert(buf.index < n_buffer);
+
+    pthread_mutex_lock(&global.update_lock);
+
+    // 读取到全局的buffer中去.
+    global.length = camera_data[buf.index].length;
+
+    // 采集的数据大于预定义的大小, 扩充内存.
+    if (global.length > PICTURE_SIZE){
+        global.start = realloc(global.start, global.length);
+        memcpy(global.start, camera_data[buf.index].start, global.length);
+    }
+    else {
+        memcpy(global.start, camera_data[buf.index].start, global.length);
+    }
+
+    // printf("pthread_cond_broadcast\n");
+    pthread_mutex_unlock(&global.update_lock);
+
+    // 唤醒等待的线程.
+    pthread_cond_broadcast(&global.update_cond);
+
+    if (-1 == ioctl(fd, VIDIOC_QBUF, &buf)){
+        perror("Fail to ioctl 'VIDIOC_QBUF'");
+        return -1;
+    }
+
+    //printf("read_frame() success!\n");
+    return 0;
+}
 
 int yuyv_to_rgb(const unsigned char *yuv, char *file_name, int width, int height) // 640*480
 {
