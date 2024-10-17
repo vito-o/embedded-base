@@ -10,13 +10,19 @@ int main(int argc, char const *argv[])
     ChessBoard *chessBoard = ChessBoard::getChessBoard();
     chessBoard->show();
 
-    WhitePlayer wPlayer("zhangsan");
     BlackPlayer bPlayer("lisi");
+    WhitePlayer wPlayer("zhangsan");
+    /* 
     wPlayer.placeChess(5, 7);
-    bPlayer.placeChess(5, 3);
+    bPlayer.placeChess(5, 3); */
 
     KeyHandle k;
-    k.waitPlaceChess();
+    
+    while (1)
+    {
+        k.waitPlayerPlaceChess(&bPlayer);
+    }
+    
 
     return 0;
 }
