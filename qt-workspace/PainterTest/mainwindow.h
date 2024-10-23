@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QImage>
+#include <diskitem.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,7 +26,15 @@ public:
     QImage makeDiskImage(const QImage &image);
 
 
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    DiskItem *diskItem;
 };
 #endif // MAINWINDOW_H

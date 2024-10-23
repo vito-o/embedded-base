@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QDebug>
+#include <QGraphicsScene>
+#include <QGraphicsEllipseItem>
+#include <QRect>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -8,6 +11,48 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    // qDebug() << "------------------------------------------------";
+    QGraphicsScene *scene = new QGraphicsScene(this);
+    int width = ui->graphicsView->width();
+    int height = ui->graphicsView->height();
+    QRect sceneRect(-width/2, -height/2, width, height);
+    scene->setSceneRect(sceneRect);
+
+    ui->graphicsView->setScene(scene);
+    // qDebug() << "------------------------------------------------";
+    // QGraphicsEllipseItem *item = new QGraphicsEllipseItem;
+
+    // QPen pen = item->pen();
+    // pen.setWidth(5);;
+    // pen.setColor(Qt::red);
+    // item->setPen(pen);
+
+    // QBrush brush = item->brush();
+    // brush.setStyle(Qt::SolidPattern);
+    // brush.setColor(Qt::yellow);
+    // item->setBrush(brush);
+
+    // item->setRect(QRect(-100, -50, 200, 100));
+    // item->setFlags(QGraphicsItem::ItemIsMovable);
+    // scene->addItem(item);
+    // item->setPos(0, 0);
+    // qDebug() << "------------------------------------------------";
+
+    QImage image(":/picture/1.png");
+    if (image.isNull()) {
+        qDebug() << "img is not loaded";
+    }
+
+    image = changeImageToARGB32(image);
+    image = makeCircleImage(image);
+    image = makeDiskImage(image);
+
+
+    diskItem = new DiskItem(image);
+    scene->addItem(diskItem);
+    diskItem->setPos(0, 0);
+    diskItem->setFlags(QGraphicsItem::ItemIsMovable);
 }
 
 MainWindow::~MainWindow()
@@ -31,19 +76,23 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
     // painter.drawRect(10, 20, 100, 150);
 
-    QImage image(":/picture/1.png");
-    if (image.isNull()) {
-        qDebug() << "img is not loaded";
-    }
+    // qDebug() << "------------------------------------------------";
 
-    image = changeImageToARGB32(image);
-    image = makeCircleImage(image);
-    image = makeDiskImage(image);
+    // QImage image(":/picture/1.png");
+    // if (image.isNull()) {
+    //     qDebug() << "img is not loaded";
+    // }
 
-    QPainter painter(this);
-    QRect rect = image.rect();
-    rect.moveCenter(this->rect().center());
-    painter.drawImage(rect, image);
+    // image = changeImageToARGB32(image);
+    // image = makeCircleImage(image);
+    // image = makeDiskImage(image);
+
+    // QPainter painter(this);
+    // QRect rect = image.rect();
+    // rect.moveCenter(this->rect().center());
+    // painter.drawImage(rect, image);
+
+    // qDebug() << "------------------------------------------------";
 }
 
 QImage MainWindow::changeImageToARGB32(const QImage &image)
@@ -111,4 +160,22 @@ QImage MainWindow::makeDiskImage(const QImage &image)
 
 
 
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    this->diskItem->start();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    this->diskItem->stop();
+}
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    this->diskItem->pause();
+}
 
