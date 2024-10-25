@@ -1,0 +1,22 @@
+{
+	"list": [
+		{
+			"msicName":"起风了",
+			"albumName":"起风了",
+			"duration":325,
+			"path":"/music/起风了/",
+			"mp3":"music.mp3",
+			"lyric":"lyric.txt",
+			"img": "img.jpg"
+		},
+		{
+			"msicName":"若是月亮还没来",
+			"albumName":"若是月亮还没来",
+			"duration":253,
+			"path":"/music/若是月亮还没来/",
+			"mp3":"music.mp3",
+			"lyric":"lyric.txt",
+			"img": "img.jpg"
+		}
+	]
+}
