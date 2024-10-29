@@ -230,7 +230,7 @@
          </spacer>
         </item>
         <item row="1" column="8">
-         <widget class="QPushButton" name="pushButton_menu">
+         <widget class="QPushButton" name="musicLyricTableButton">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -238,7 +238,18 @@
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">border-image: url(:/images/menu.png);</string>
+           <string notr="true">QPushButton#musicLyricTableButton{
+	border-image: url(:/images/menu.png);
+}
+
+QPushButton#musicLyricTableButton[displayMode=&quot;musicTableMode&quot;] {
+	border-image: url(:/images/menu.png);
+}
+
+QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
+	border-image: url(:/images/menu1.png);
+}
+</string>
           </property>
           <property name="text">
            <string/>
@@ -318,12 +329,18 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,10,1,0">
         <item>
-         <widget class="QLabel" name="label_time_start">
+         <widget class="QLabel" name="playTimeLabel">
           <property name="styleSheet">
            <string notr="true">color: #fff;</string>
           </property>
           <property name="text">
            <string>00:00</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="margin">
+           <number>5</number>
           </property>
          </widget>
         </item>
@@ -341,7 +358,7 @@
          </spacer>
         </item>
         <item>
-         <widget class="QSlider" name="horizontalSlider">
+         <widget class="QSlider" name="musicPlaySlider">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
@@ -361,12 +378,18 @@
          </spacer>
         </item>
         <item>
-         <widget class="QLabel" name="label_time_end">
+         <widget class="QLabel" name="musicDurationLabel">
           <property name="styleSheet">
            <string notr="true">color:#fff;</string>
           </property>
           <property name="text">
            <string>00:00</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="margin">
+           <number>5</number>
           </property>
          </widget>
         </item>
@@ -381,6 +404,11 @@
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QStackedWidget#stackedWidget{
+	background-color: transparent;
+}</string>
       </property>
       <widget class="QWidget" name="page_1">
        <property name="sizePolicy">
@@ -403,7 +431,7 @@
         <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="tab_1">
            <attribute name="title">
@@ -426,7 +454,38 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tableWidget"/>
+             <widget class="QTableWidget" name="localMusicTable">
+              <column>
+               <property name="text">
+                <string>musicName</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>lyricUrl</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>albumUri</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>歌曲名</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>专辑名</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>时间</string>
+               </property>
+              </column>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -451,7 +510,44 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QTableWidget" name="tableWidget_2"/>
+             <widget class="QTableWidget" name="networkMusicTable">
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>mp3Url</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>lyricUrl</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>albumUri</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>歌曲名</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>专辑名</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>时间</string>
+               </property>
+              </column>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -465,6 +561,11 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget#page_2{
+	background-color: transparent;
+}</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5">
         <property name="spacing">
@@ -483,7 +584,18 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QTextEdit" name="textEdit"/>
+         <widget class="QTextEdit" name="lyricTextEdit">
+          <property name="styleSheet">
+           <string notr="true">QTextEdit#lyricTextEdit {
+	background-color: transparent;
+	color: #fff;
+	border-style: outset;
+}</string>
+          </property>
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>

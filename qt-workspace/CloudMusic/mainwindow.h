@@ -2,9 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "musicsearch.h"
-#include "musichttpurl.h"
-#include "musicinformation.h"
+#include <QTableWidget>
+#include <musicplayer.h>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,11 +20,25 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void initMusicTable(QTableWidget *tableWidget);
+    void updateMusicDisplayDuration(qint64 duration);
+    void updateMusicSliderRange(qint64 duration);
+    void updateMusicPlayPosition(qint64 position);
+    void updateLyricTableButtonStyle();
+    void initMusicLyricTextEdit();
+
 private slots:
     void on_searchlineEdit_returnPressed();
+    void on_networkMusicTable_cellDoubleClicked(int row, int column);
+    void insertNetworkMusicTable(const MusicInformation &musicInfo);
+    void on_musicPlaySlider_sliderMoved(int position);
+    void updateMusicDisplayLyric(const QString &musicLyricText);
+    void on_musicLyricTableButton_clicked();
+    void selectPlayLyricByLine(int lineIndex);
 
 private:
     Ui::MainWindow *ui;
-    MusicSearch *musicSearch;
+    MusicPlayer *musicPlayer;
+
 };
 #endif // MAINWINDOW_H

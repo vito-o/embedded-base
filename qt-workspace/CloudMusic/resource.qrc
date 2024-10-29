@@ -8,5 +8,6 @@
         <file>images/next.png</file>
         <file>images/prev.png</file>
         <file>images/random.png</file>
+        <file>images/menu1.png</file>
     </qresource>
 </RCC>

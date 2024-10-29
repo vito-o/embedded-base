@@ -29,15 +29,18 @@ QString MusicHttpUrl::getMusicSearchUrl(const QString &music)
 
 QString MusicHttpUrl::getMusicMP3Url(const MusicInformation &musicInfo)
 {
-    return "";
+    QString mp3Url = QString("%1/music/%2/%3").arg(baseHttpUrl).arg(musicInfo.getMusicPath()).arg(musicInfo.getMusicMp3());
+    return mp3Url;
 }
 
 QString MusicHttpUrl::getMusicAlbumUrl(const MusicInformation &musicInfo)
 {
-    return "";
+    QString albumUrl = QString("%1/music/%2/%3").arg(baseHttpUrl).arg(musicInfo.getMusicPath()).arg(musicInfo.getAlbumImage());
+    return albumUrl;
 }
 
 QString MusicHttpUrl::getMusicLyricUrl(const MusicInformation &musicInfo)
 {
-    return "";
+    QString lyricUrl = QString("%1/music/%2/%3").arg(baseHttpUrl).arg(musicInfo.getMusicPath()).arg(musicInfo.getMusicLyric());
+    return lyricUrl;
 }
