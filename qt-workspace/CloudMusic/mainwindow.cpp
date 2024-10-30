@@ -11,6 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    // this->resize(945, 760);
+    // 添加时间过滤器对象
+    ui->graphicsView->installEventFilter(this);
+
     initMusicTable(ui->networkMusicTable);
     initMusicLyricTextEdit();
 
@@ -21,7 +25,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(musicPlayer, &MusicPlayer::positionChanged, this, &MainWindow::updateMusicPlayPosition);
     connect(musicPlayer, &MusicPlayer::musicLyricReady, this, &MainWindow::updateMusicDisplayLyric);
     connect(musicPlayer, &MusicPlayer::playLyricLineChanged, this, &MainWindow::selectPlayLyricByLine);
+    connect(musicPlayer, &MusicPlayer::stateChanged, this, &MainWindow::handlePlayerState);
 
+    musicScene = new MusicScene(this);
+    ui->graphicsView->setScene(musicScene->getScene());
+    connect(musicPlayer, &MusicPlayer::musicAlbumReady, musicScene, &MusicScene::updateDiskImage);
 }
 
 MainWindow::~MainWindow()
@@ -106,6 +114,8 @@ void MainWindow::on_networkMusicTable_cellDoubleClicked(int row, int column)
     QStringList urlList;
     urlList << mp3Url << lyricUrl << albumUrl;
     musicPlayer->playMusic(urlList);
+
+    musicScene->startAnimation();
 }
 
 
@@ -140,6 +150,19 @@ void MainWindow::selectPlayLyricByLine(int lineIndex)
     ui->lyricTextEdit->setTextCursor(cursor);
 }
 
+void MainWindow::handlePlayerState(QMediaPlayer::State state)
+{
+    if (state == QMediaPlayer::PlayingState) {
+        ui->playButton->setProperty("state", "playing");
+    } else {
+        ui->playButton->setProperty("state", "noPlaying");
+        musicScene->stopAnimation();
+    }
+    ui->playButton->style()->unpolish(ui->playButton);
+    ui->playButton->style()->polish(ui->playButton);
+    ui->playButton->update();
+}
+
 void MainWindow::updateLyricTableButtonStyle() {
     if (ui->stackedWidget->currentIndex() == 0) {
         ui->musicLyricTableButton->setProperty("displayMode", "musicTableMode");
@@ -165,3 +188,29 @@ void MainWindow::initMusicLyricTextEdit()
 
     ui->stackedWidget->setCurrentIndex(0);
 }
+
+bool MainWindow::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == ui->graphicsView) {
+        if (event->type() == QEvent::Resize) {
+            QRect rect = ui->graphicsView->rect();
+            musicScene->setMusicSceneRect(rect);
+        }
+    }
+    return QMainWindow::eventFilter(watched, event);
+}
+
+void MainWindow::on_playButton_clicked()
+{
+    if (musicPlayer->state() == QMediaPlayer::PlayingState) {
+        musicPlayer->pause();
+    } else {
+        if (musicPlayer->state() == QMediaPlayer::PausedState) {
+            musicScene->resumeAnimation();
+        } else {
+            musicScene->startAnimation();
+        }
+        musicPlayer->play();
+    }
+}
+

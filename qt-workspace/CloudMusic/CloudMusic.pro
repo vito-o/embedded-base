@@ -16,14 +16,18 @@ SOURCES += \
     musichttp.cpp \
     musichttpurl.cpp \
     musicinformation.cpp \
-    musicplayer.cpp
+    musicitem.cpp \
+    musicplayer.cpp \
+    musicscene.cpp
 
 HEADERS += \
     mainwindow.h \
     musichttp.h \
     musichttpurl.h \
     musicinformation.h \
-    musicplayer.h
+    musicitem.h \
+    musicplayer.h \
+    musicscene.h
 
 FORMS += \
     mainwindow.ui

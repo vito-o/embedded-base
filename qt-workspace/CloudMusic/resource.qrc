@@ -9,5 +9,9 @@
         <file>images/prev.png</file>
         <file>images/random.png</file>
         <file>images/menu1.png</file>
+        <file>images/default.png</file>
+        <file>images/default-background.png</file>
+        <file>images/default.jpg</file>
+        <file>images/zhen1.png</file>
     </qresource>
 </RCC>

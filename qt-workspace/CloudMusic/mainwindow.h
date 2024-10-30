@@ -3,8 +3,8 @@
 
 #include <QMainWindow>
 #include <QTableWidget>
-#include <musicplayer.h>
-
+#include "musicplayer.h"
+#include "musicscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -26,6 +26,7 @@ public:
     void updateMusicPlayPosition(qint64 position);
     void updateLyricTableButtonStyle();
     void initMusicLyricTextEdit();
+    bool eventFilter(QObject *watched, QEvent *event);
 
 private slots:
     void on_searchlineEdit_returnPressed();
@@ -35,10 +36,14 @@ private slots:
     void updateMusicDisplayLyric(const QString &musicLyricText);
     void on_musicLyricTableButton_clicked();
     void selectPlayLyricByLine(int lineIndex);
+    void handlePlayerState(QMediaPlayer::State state);
+
+    void on_playButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     MusicPlayer *musicPlayer;
+    MusicScene *musicScene;
 
 };
 #endif // MAINWINDOW_H

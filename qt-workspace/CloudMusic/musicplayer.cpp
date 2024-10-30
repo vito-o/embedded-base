@@ -4,8 +4,9 @@ MusicPlayer::MusicPlayer(QMediaPlayer *parent)
     : QMediaPlayer{parent}
 {
     mediaPlayer = new QMediaPlayer(this);
-    musicSearch = new MusicSearch(this);
+    connect(this, &MusicPlayer::positionChanged, this, &MusicPlayer::queryPlayLryicLineByTime);
 
+    musicSearch = new MusicSearch(this);
     connect(musicSearch, &MusicSearch::musicDataReady, this, [this]() {
         QList<MusicInformation> musicInfoList = musicSearch->readMusicData();
         for(MusicInformation musicInfo : musicInfoList) {
@@ -20,10 +21,11 @@ MusicPlayer::MusicPlayer(QMediaPlayer *parent)
         lyricTimeMap = musicLyric->getLyricTimeMap();
     });
 
-    connect(this, &MusicPlayer::positionChanged, this, &MusicPlayer::queryPlayLryicLineByTime);
-
     //设置通知间隔
     this->setNotifyInterval(200);
+
+    musicAlbum = new MusicAlbum(this);
+    connect(musicAlbum, &MusicAlbum::musicAlbumReady, this, &MusicPlayer::musicAlbumReady);
 }
 
 void MusicPlayer::searchMusic(const QString searchText)
@@ -38,6 +40,7 @@ void MusicPlayer::playMusic(const QStringList &urlList)
     QString albumUrl = urlList[2];
 
     musicLyric->download(lyricUrl);
+    musicAlbum->download(albumUrl);
 
     this->setMedia(QUrl(mp3Url));
     this->setVolume(10);
