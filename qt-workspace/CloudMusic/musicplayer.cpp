@@ -17,7 +17,6 @@ MusicPlayer::MusicPlayer(QMediaPlayer *parent)
     musicLyric = new MusicLyric(this);
     connect(musicLyric, &MusicLyric::lyricReady, this, [this]() {
         emit musicLyricReady(musicLyric->getMusicLyricText());
-
         lyricTimeMap = musicLyric->getLyricTimeMap();
     });
 

@@ -34,8 +34,10 @@ FORMS += \
 
 # 包含pri工程
 include(MusicHandle/MusicHandle.pri)
+include(MusicSet/MusicSet.pri)
 # 添加pri工程头文件路径
 INCLUDEPATH += MusicHandle
+INCLUDEPATH += MusicSet
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

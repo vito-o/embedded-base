@@ -13,5 +13,9 @@
         <file>images/default-background.png</file>
         <file>images/default.jpg</file>
         <file>images/zhen1.png</file>
+        <file>images/next1.png</file>
+        <file>images/prev1.png</file>
+        <file>images/random1.png</file>
+        <file>images/voice.png</file>
     </qresource>
 </RCC>

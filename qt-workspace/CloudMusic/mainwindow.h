@@ -5,6 +5,10 @@
 #include <QTableWidget>
 #include "musicplayer.h"
 #include "musicscene.h"
+#include "voicesetwidget.h"
+#include "musicdownloadsetwidget.h"
+#include "serveraddresssetwidget.h"
+#include "musichttpurl.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,6 +31,8 @@ public:
     void updateLyricTableButtonStyle();
     void initMusicLyricTextEdit();
     bool eventFilter(QObject *watched, QEvent *event);
+    void playMusic(const QStringList &urlList);
+    void playTableMusic(QTableWidget *musicTable, int row);
 
 private slots:
     void on_searchlineEdit_returnPressed();
@@ -40,10 +46,28 @@ private slots:
 
     void on_playButton_clicked();
 
+    void on_tabWidget_currentChanged(int index);
+
+    void on_nextButton_clicked();
+
+    void on_prevButton_clicked();
+
+    void on_randomButton_clicked();
+    void handlePlayerMediaStatus(QMediaPlayer::MediaStatus status);
+
+    void on_voiceSetAction_triggered();
+
+    void on_musicDownloadSetAction_triggered();
+
+    void on_serverAddressSetAction_triggered();
+
 private:
     Ui::MainWindow *ui;
     MusicPlayer *musicPlayer;
     MusicScene *musicScene;
-
+    QTableWidget *musicTable;
+    VoiceSetWidget *voiceSet;
+    MusicDownloadSetWidget *downloadSet;
+    ServerAddressSetWidget *serverAddressSet;
 };
 #endif // MAINWINDOW_H

@@ -12,10 +12,20 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     // this->resize(945, 760);
+
+    voiceSet = new VoiceSetWidget(this);
+    downloadSet = new MusicDownloadSetWidget(this);
+    serverAddressSet = new ServerAddressSetWidget(this);
+    connect(serverAddressSet, &ServerAddressSetWidget::serverAddressChanged, MusicHttpUrl::getMusicHttpUrlObject(), &MusicHttpUrl::setServerAddress);
+
+
     // 添加时间过滤器对象
     ui->graphicsView->installEventFilter(this);
 
+    ui->tabWidget->setCurrentIndex(1);
+    musicTable = ui->networkMusicTable;
     initMusicTable(ui->networkMusicTable);
+
     initMusicLyricTextEdit();
 
     musicPlayer = new MusicPlayer;
@@ -26,6 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(musicPlayer, &MusicPlayer::musicLyricReady, this, &MainWindow::updateMusicDisplayLyric);
     connect(musicPlayer, &MusicPlayer::playLyricLineChanged, this, &MainWindow::selectPlayLyricByLine);
     connect(musicPlayer, &MusicPlayer::stateChanged, this, &MainWindow::handlePlayerState);
+    connect(musicPlayer, &MusicPlayer::mediaStatusChanged, this, &MainWindow::handlePlayerMediaStatus);
+
+    connect(voiceSet, &VoiceSetWidget::voiceChanged, musicPlayer, &MusicPlayer::setVolume);
 
     musicScene = new MusicScene(this);
     ui->graphicsView->setScene(musicScene->getScene());
@@ -112,12 +125,15 @@ void MainWindow::on_networkMusicTable_cellDoubleClicked(int row, int column)
     QString albumUrl = ui->networkMusicTable->item(row, 2)->text();
 
     QStringList urlList;
-    urlList << mp3Url << lyricUrl << albumUrl;
-    musicPlayer->playMusic(urlList);
 
-    musicScene->startAnimation();
+    playMusic(urlList << mp3Url << lyricUrl << albumUrl);
 }
 
+void MainWindow::playMusic(const QStringList &urlList)
+{
+    musicPlayer->playMusic(urlList);
+    musicScene->startAnimation();
+}
 
 void MainWindow::on_musicPlaySlider_sliderMoved(int position)
 {
@@ -200,8 +216,25 @@ bool MainWindow::eventFilter(QObject *watched, QEvent *event)
     return QMainWindow::eventFilter(watched, event);
 }
 
+
+
+void MainWindow::playTableMusic(QTableWidget *musicTable, int row)
+{
+    musicTable->selectRow(row);
+
+    QString mp3Url = musicTable->item(row, 0)->text();
+    QString lyricUrl = musicTable->item(row, 1)->text();
+    QString albumUrl = musicTable->item(row, 2)->text();
+
+    playMusic(QStringList() << mp3Url << lyricUrl << albumUrl);
+}
+
 void MainWindow::on_playButton_clicked()
 {
+    if (musicPlayer->mediaStatus() == QMediaPlayer::NoMedia) {
+        return;
+    }
+
     if (musicPlayer->state() == QMediaPlayer::PlayingState) {
         musicPlayer->pause();
     } else {
@@ -212,5 +245,113 @@ void MainWindow::on_playButton_clicked()
         }
         musicPlayer->play();
     }
+}
+
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    if (index == 0) {
+        musicTable = ui->localMusicTable;
+    } else {
+        musicTable = ui->networkMusicTable;
+    }
+
+    initMusicTable(musicTable);
+}
+
+
+void MainWindow::on_nextButton_clicked()
+{
+    int totalRow = musicTable->rowCount();
+    if (!totalRow) {
+        return ;
+    }
+
+    int row;
+    int currentRow = musicTable->currentRow();
+    if (currentRow < totalRow - 1) {
+        row = currentRow + 1;
+    } else {
+        row = 0;
+    }
+
+    playTableMusic(musicTable, row);
+}
+
+
+void MainWindow::on_prevButton_clicked()
+{
+    int totalRow = musicTable->rowCount();
+    if (!totalRow) {
+        return ;
+    }
+
+    int row;
+    int currentRow = musicTable->currentRow();
+    if (currentRow > 0) {
+        row = currentRow - 1;
+    } else {
+        row = totalRow - 1;
+    }
+
+    playTableMusic(musicTable, row);
+}
+
+
+void MainWindow::on_randomButton_clicked()
+{
+    bool rand = ui->randomButton->property("rand").toBool();
+    if (!rand) {
+        ui->randomButton->setProperty("rand", "true");
+    } else {
+        ui->randomButton->setProperty("rand", "false");
+    }
+    ui->randomButton->style()->unpolish(ui->randomButton);
+    ui->randomButton->style()->polish(ui->randomButton);
+    ui->randomButton->update();
+
+    // int row;
+    //
+    // if (!totalRow) {
+    //     return ;
+    // }
+    // int currentRow = musicTable->currentRow();
+
+    // row = randomInteger(0, totalRow-1);
+
+    // playTableMusic(musicTable, row);
+}
+
+void MainWindow::handlePlayerMediaStatus(QMediaPlayer::MediaStatus status)
+{
+    if (status == QMediaPlayer::EndOfMedia) {
+        bool rand = ui->randomButton->property("rand").toBool();
+        if (rand) {
+            int totalRow = musicTable->rowCount();
+            if (!totalRow) {
+                return ;
+            }
+            int row = qrand() % totalRow;
+            playTableMusic(musicTable, row);
+        }
+    }
+}
+
+
+void MainWindow::on_voiceSetAction_triggered()
+{
+    voiceSet->show();
+}
+
+
+void MainWindow::on_musicDownloadSetAction_triggered()
+{
+    downloadSet->show();
+}
+
+
+void MainWindow::on_serverAddressSetAction_triggered()
+{
+    serverAddressSet->show();
 }
 
