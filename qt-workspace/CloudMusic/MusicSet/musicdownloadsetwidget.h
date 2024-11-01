@@ -14,6 +14,7 @@ class MusicDownloadSetWidget : public QWidget
 public:
     explicit MusicDownloadSetWidget(QWidget *parent = nullptr);
     ~MusicDownloadSetWidget();
+    void setDownloadPath(QString downloadPath);
 
 signals:
     void downloadPathChanged(QString downloadPath);

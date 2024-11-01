@@ -19,8 +19,12 @@ public:
     bool isError();
     QByteArray readAll(void);
 
+    QString getFilename() const;
+    void setFilename(const QString &newFilename);
+
 signals:
     void readyRead();
+    void error();
 
 public slots:
     void writeData();

@@ -11,14 +11,18 @@ ServerAddressSetWidget::ServerAddressSetWidget(QWidget *parent)
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground, true);
     setWindowFlag(Qt::Window);
-
-    ui->ipLineEdit->setText("192.168.239.1");
-    ui->portLineEdit->setText("8080");
 }
 
 ServerAddressSetWidget::~ServerAddressSetWidget()
 {
     delete ui;
+}
+
+void ServerAddressSetWidget::setServerAddress(QString ip, QString port)
+{
+    ui->ipLineEdit->setText(ip);
+    ui->portLineEdit->setText(port);
+    emit serverAddressChanged(ip, port);
 }
 
 void ServerAddressSetWidget::on_SAResetButton_clicked()

@@ -8,15 +8,18 @@ VoiceSetWidget::VoiceSetWidget(QWidget *parent)
     ui->setupUi(this);
     setAttribute(Qt::WA_StyledBackground, true);
     setWindowFlag(Qt::Window);
-
-    int initVolume = 10;
-    ui->voiceLabel->setText(QString::number(initVolume));
-    ui->voiceSlider->setValue(initVolume);
 }
 
 VoiceSetWidget::~VoiceSetWidget()
 {
     delete ui;
+}
+
+void VoiceSetWidget::setVoice(qint32 voice)
+{
+    ui->voiceLabel->setText(QString::number(voice));
+    ui->voiceSlider->setValue(voice);
+    emit voiceChanged(voice);
 }
 
 void VoiceSetWidget::on_voiceSlider_sliderMoved(int position)

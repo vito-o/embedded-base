@@ -79,4 +79,16 @@ void MusicHttp::handleError(QNetworkReply::NetworkError code)
 {
     qDebug() << "NetworkError, code: " << code;
     state = MusicHttpState::MusicHttpErrorState;
+
+    emit error();
+}
+
+QString MusicHttp::getFilename() const
+{
+    return filename;
+}
+
+void MusicHttp::setFilename(const QString &newFilename)
+{
+    filename = newFilename;
 }

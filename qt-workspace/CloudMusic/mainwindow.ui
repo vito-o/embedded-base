@@ -468,7 +468,7 @@ QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
         <item>
          <widget class="QTabWidget" name="tabWidget">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_1">
            <attribute name="title">
@@ -494,17 +494,17 @@ QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
              <widget class="QTableWidget" name="localMusicTable">
               <column>
                <property name="text">
-                <string>musicName</string>
+                <string>musicPath</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>lyricUrl</string>
+                <string>lyricPath</string>
                </property>
               </column>
               <column>
                <property name="text">
-                <string>albumUri</string>
+                <string>albumPath</string>
                </property>
               </column>
               <column>
@@ -656,6 +656,7 @@ QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
     <addaction name="voiceSetAction"/>
     <addaction name="musicDownloadSetAction"/>
     <addaction name="serverAddressSetAction"/>
+    <addaction name="downloadNetworkMusicFlag"/>
    </widget>
    <addaction name="menu"/>
   </widget>
@@ -673,6 +674,14 @@ QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
   <action name="serverAddressSetAction">
    <property name="text">
     <string>服务器地址设置</string>
+   </property>
+  </action>
+  <action name="downloadNetworkMusicFlag">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>下载网络歌曲</string>
    </property>
   </action>
  </widget>

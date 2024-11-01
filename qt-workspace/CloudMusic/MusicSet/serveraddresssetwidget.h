@@ -14,6 +14,8 @@ class ServerAddressSetWidget : public QWidget
 public:
     explicit ServerAddressSetWidget(QWidget *parent = nullptr);
     ~ServerAddressSetWidget();
+    void setServerAddress(QString ip, QString port);
+
 signals:
     void serverAddressChanged(QString ip, QString port);
 private slots:

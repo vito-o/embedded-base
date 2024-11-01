@@ -1,6 +1,7 @@
 QT       += core gui
 QT       += network
 QT       += multimedia
+QT       += sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -13,6 +14,9 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
+    musicconfig.cpp \
+    musicdatabase.cpp \
+    musicdownload.cpp \
     musichttp.cpp \
     musichttpurl.cpp \
     musicinformation.cpp \
@@ -22,6 +26,9 @@ SOURCES += \
 
 HEADERS += \
     mainwindow.h \
+    musicconfig.h \
+    musicdatabase.h \
+    musicdownload.h \
     musichttp.h \
     musichttpurl.h \
     musicinformation.h \

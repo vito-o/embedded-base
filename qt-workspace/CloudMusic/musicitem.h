@@ -31,8 +31,10 @@ public:
 
     void resumeAnimation();
 
-signals:
+    bool isFinished();
 
+signals:
+    void finishedAnimation(void);
 private:
     QImage image;
     QPropertyAnimation *animation;

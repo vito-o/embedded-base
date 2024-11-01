@@ -5,6 +5,8 @@ MusicItem::MusicItem(const QString &filename, QObject *parent)
 {
     image.load(filename);
     animation = new QPropertyAnimation(this, "angle");
+
+    connect(animation, &QPropertyAnimation::finished, this, &MusicItem::finishedAnimation);
 }
 
 void MusicItem::updateImage(const QImage &image)
@@ -73,4 +75,9 @@ void MusicItem::resumeAnimation()
     if (animation->state() == QPropertyAnimation::Paused) {
         animation->resume();
     }
+}
+
+bool MusicItem::isFinished()
+{
+    return animation->state() == QPropertyAnimation::Stopped;
 }

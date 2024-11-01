@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->setCurrentIndex(1);
     musicTable = ui->networkMusicTable;
     initMusicTable(ui->networkMusicTable);
+    initMusicTable(ui->localMusicTable);
 
     initMusicLyricTextEdit();
 
@@ -43,6 +44,16 @@ MainWindow::MainWindow(QWidget *parent)
     musicScene = new MusicScene(this);
     ui->graphicsView->setScene(musicScene->getScene());
     connect(musicPlayer, &MusicPlayer::musicAlbumReady, musicScene, &MusicScene::updateDiskImage);
+
+    musicDownload = new MusicDownload;
+    musicDatabase = new MusicDatabase;
+    connect(musicDownload, &MusicDownload::musicDownloadReady, musicDatabase, &MusicDatabase::recordMusic);
+    connect(musicDatabase, &MusicDatabase::musicReady, this, &MainWindow::insertLocalMusicTable);
+
+    musicConfig = new MusicConfig(this);
+    initMusicConfig(musicConfig);
+
+
 }
 
 MainWindow::~MainWindow()
@@ -71,6 +82,19 @@ void MainWindow::insertNetworkMusicTable(const MusicInformation &musicInfo)
     ui->networkMusicTable->setItem(lineNumber, 5, new QTableWidgetItem(time.toString("mm:ss")));
 }
 
+void MainWindow::insertLocalMusicTable(const QStringList &musicInfo)
+{
+    int lineNumber = ui->localMusicTable->rowCount();
+    ui->localMusicTable->insertRow(lineNumber);
+
+    ui->localMusicTable->setItem(lineNumber, 0, new QTableWidgetItem(musicInfo[0]));
+    ui->localMusicTable->setItem(lineNumber, 1, new QTableWidgetItem(musicInfo[1]));
+    ui->localMusicTable->setItem(lineNumber, 2, new QTableWidgetItem(musicInfo[2]));
+    ui->localMusicTable->setItem(lineNumber, 3, new QTableWidgetItem(musicInfo[3]));
+    ui->localMusicTable->setItem(lineNumber, 4, new QTableWidgetItem(musicInfo[4]));
+    ui->localMusicTable->setItem(lineNumber, 5, new QTableWidgetItem(musicInfo[5]));
+}
+
 void MainWindow::initMusicTable(QTableWidget *tableWidget)
 {
     tableWidget->hideColumn(0);
@@ -80,6 +104,29 @@ void MainWindow::initMusicTable(QTableWidget *tableWidget)
     tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+}
+
+void MainWindow::initMusicConfig(MusicConfig *musicConfig)
+{
+    voiceSet->setVoice(musicConfig->getVoiceSize());
+    downloadSet->setDownloadPath(musicConfig->getDownloadPath());
+    serverAddressSet->setServerAddress(musicConfig->getServerIp(), musicConfig->getServerPort());
+    ui->downloadNetworkMusicFlag->setChecked(musicConfig->getDownloadMusicFlag());
+    musicDownload->setDownloadPath(musicConfig->getDownloadPath());
+
+    connect(voiceSet, &VoiceSetWidget::voiceChanged, this, [musicConfig] (int size) {
+        musicConfig->setVoiceSize(size);
+    });
+    connect(downloadSet, &MusicDownloadSetWidget::downloadPathChanged, this, [musicConfig] (const QString &downloadPath) {
+        musicConfig->setDownloadPath(downloadPath);
+    });
+    connect(serverAddressSet, &ServerAddressSetWidget::serverAddressChanged, this, [musicConfig] (const QString &ip, const QString &port) {
+        musicConfig->setServerIpAndPort(ip, port);
+    });
+    connect(ui->downloadNetworkMusicFlag, &QAction::toggled, this, [musicConfig](bool checked) {
+        musicConfig->setDownloadMusicFlag(checked);
+    });
+    connect(downloadSet, &MusicDownloadSetWidget::downloadPathChanged, musicDownload, &MusicDownload::updateDownloadPath);
 }
 
 void MainWindow::updateMusicDisplayDuration(qint64 duration)
@@ -123,10 +170,16 @@ void MainWindow::on_networkMusicTable_cellDoubleClicked(int row, int column)
     QString mp3Url = ui->networkMusicTable->item(row, 0)->text();
     QString lyricUrl = ui->networkMusicTable->item(row, 1)->text();
     QString albumUrl = ui->networkMusicTable->item(row, 2)->text();
+    QString musicName = ui->networkMusicTable->item(row, 3)->text();
+    QString albumName = ui->networkMusicTable->item(row, 4)->text();
+    QString musicTime = ui->networkMusicTable->item(row, 5)->text();
 
     QStringList urlList;
-
     playMusic(urlList << mp3Url << lyricUrl << albumUrl);
+
+    if (ui->downloadNetworkMusicFlag->isChecked()) {
+        musicDownload->download(QStringList() << mp3Url << lyricUrl << albumUrl << musicName << albumName << musicTime);
+    }
 }
 
 void MainWindow::playMusic(const QStringList &urlList)

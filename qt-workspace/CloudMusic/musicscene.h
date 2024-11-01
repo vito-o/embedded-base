@@ -24,7 +24,7 @@ public slots:
     void updateDiskImage(const QImage &image);
 
 private:
-    QTimer *timer;
+    // QTimer *timer;
     MusicItem *diskItem;
     MusicItem *needleItem;
     QGraphicsScene *scene;

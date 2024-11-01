@@ -9,6 +9,9 @@
 #include "musicdownloadsetwidget.h"
 #include "serveraddresssetwidget.h"
 #include "musichttpurl.h"
+#include "musicconfig.h"
+#include "musicdownload.h"
+#include "musicdatabase.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,6 +28,8 @@ public:
     ~MainWindow();
 
     void initMusicTable(QTableWidget *tableWidget);
+    void initMusicConfig(MusicConfig *musicConfig);
+
     void updateMusicDisplayDuration(qint64 duration);
     void updateMusicSliderRange(qint64 duration);
     void updateMusicPlayPosition(qint64 position);
@@ -38,6 +43,7 @@ private slots:
     void on_searchlineEdit_returnPressed();
     void on_networkMusicTable_cellDoubleClicked(int row, int column);
     void insertNetworkMusicTable(const MusicInformation &musicInfo);
+    void insertLocalMusicTable(const QStringList &musicInfo);
     void on_musicPlaySlider_sliderMoved(int position);
     void updateMusicDisplayLyric(const QString &musicLyricText);
     void on_musicLyricTableButton_clicked();
@@ -69,5 +75,8 @@ private:
     VoiceSetWidget *voiceSet;
     MusicDownloadSetWidget *downloadSet;
     ServerAddressSetWidget *serverAddressSet;
+    MusicConfig *musicConfig;
+    MusicDownload *musicDownload;
+    MusicDatabase *musicDatabase;
 };
 #endif // MAINWINDOW_H

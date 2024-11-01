@@ -16,6 +16,12 @@ MusicDownloadSetWidget::~MusicDownloadSetWidget()
     delete ui;
 }
 
+void MusicDownloadSetWidget::setDownloadPath(QString downloadPath)
+{
+    ui->downloadLineEdit->setText(downloadPath);
+    emit downloadPathChanged(downloadPath);
+}
+
 void MusicDownloadSetWidget::on_downloadSearchButton_clicked()
 {
     QString downloadPath = QFileDialog::getExistingDirectory(

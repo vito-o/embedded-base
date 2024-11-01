@@ -4,12 +4,12 @@
 MusicScene::MusicScene(QObject *parent)
     : QObject{parent}
 {
-    timer = new QTimer(this);
-    //设置setimeout 只执行一次
-    timer->setSingleShot(true);
-    connect(timer, &QTimer::timeout, this, [this]() {
-        diskItem->startAnimation(60*1000, 0, 360);
-    });
+    // timer = new QTimer(this);
+    // //设置setimeout 只执行一次
+    // timer->setSingleShot(true);
+    // connect(timer, &QTimer::timeout, this, [this]() {
+    //     diskItem->startAnimation(60*1000, 0, 360);
+    // });
 
     scene = new QGraphicsScene(this);
     diskItem = new MusicItem(":/images/default-background.png", this);
@@ -20,6 +20,10 @@ MusicScene::MusicScene(QObject *parent)
 
     scene->addItem(diskItem);
     scene->addItem(needleItem);
+
+    connect(needleItem, &MusicItem::finishedAnimation, [this]() {
+        diskItem->startAnimation(60*1000, 0, 360);
+    });
 }
 
 QGraphicsScene *MusicScene::getScene() const
@@ -45,18 +49,21 @@ void MusicScene::startAnimation()
 {
     diskItem->pauseAnimation();
     needleItem->startAnimation(3 * 1000, 0, 20, 1);
-    timer->start(3 * 1000);
 }
 
 void MusicScene::stopAnimation()
 {
     diskItem->pauseAnimation();
+    needleItem->pauseAnimation();
 }
 
+// 重新恢复
 void MusicScene::resumeAnimation()
 {
-    diskItem->resumeAnimation();
     needleItem->resumeAnimation();
+    if (needleItem->isFinished()) {
+        diskItem->resumeAnimation();
+    }
 }
 
 void MusicScene::updateDiskImage(const QImage &image)
