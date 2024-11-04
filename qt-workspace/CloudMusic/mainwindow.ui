@@ -492,6 +492,9 @@ QPushButton#musicLyricTableButton[displayMode=&quot;musicLyricMode&quot;] {
             </property>
             <item>
              <widget class="QTableWidget" name="localMusicTable">
+              <attribute name="verticalHeaderVisible">
+               <bool>false</bool>
+              </attribute>
               <column>
                <property name="text">
                 <string>musicPath</string>

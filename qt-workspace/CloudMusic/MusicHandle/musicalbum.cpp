@@ -27,6 +27,12 @@ void MusicAlbum::handleData()
     }
 }
 
+void MusicAlbum::handleLocalData(const QString &filename)
+{
+    QImage image = makeDiskImage(QImage(filename));
+    emit musicAlbumReady(image);
+}
+
 QImage MusicAlbum::changeImageToARGB32(const QImage &image)
 {
     QImage circleImage(":/images/default.png");

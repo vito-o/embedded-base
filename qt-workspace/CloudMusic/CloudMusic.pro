@@ -22,7 +22,8 @@ SOURCES += \
     musicinformation.cpp \
     musicitem.cpp \
     musicplayer.cpp \
-    musicscene.cpp
+    musicscene.cpp \
+    tablemenu.cpp
 
 HEADERS += \
     mainwindow.h \
@@ -34,7 +35,8 @@ HEADERS += \
     musicinformation.h \
     musicitem.h \
     musicplayer.h \
-    musicscene.h
+    musicscene.h \
+    tablemenu.h
 
 FORMS += \
     mainwindow.ui

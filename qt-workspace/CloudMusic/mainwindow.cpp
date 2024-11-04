@@ -5,6 +5,7 @@
 #include <QList>
 #include <QTime>
 #include <QTextBlock>
+#include "tablemenu.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -53,6 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
     musicConfig = new MusicConfig(this);
     initMusicConfig(musicConfig);
 
+    // 设置右键菜单
+    TableMenu *tableMenu = new TableMenu(ui->localMusicTable);
+    ui->localMusicTable->setContextMenuPolicy(Qt::CustomContextMenu); //设置当前权限才能发送信号
+    connect(ui->localMusicTable, &QTableWidget::customContextMenuRequested, this, [tableMenu](const QPoint &pos) {
+        tableMenu->exec(QCursor::pos());
+    });
+
+    connect(tableMenu, &TableMenu::removeMusicReady, musicDatabase, &MusicDatabase::removeMusic);
 
 }
 
@@ -182,9 +191,31 @@ void MainWindow::on_networkMusicTable_cellDoubleClicked(int row, int column)
     }
 }
 
+void MainWindow::on_localMusicTable_cellDoubleClicked(int row, int column)
+{
+    Q_UNUSED(column);
+
+    QString mp3Path = ui->localMusicTable->item(row, 0)->text();
+    QString lyricPath = ui->localMusicTable->item(row, 1)->text();
+    QString albumPath = ui->localMusicTable->item(row, 2)->text();
+    // QString musicName = ui->networkMusicTable->item(row, 3)->text();
+    // QString albumName = ui->networkMusicTable->item(row, 4)->text();
+    // QString musicTime = ui->networkMusicTable->item(row, 5)->text();
+
+    QStringList urlList;
+    playLocalMusic(urlList << mp3Path << lyricPath << albumPath);
+}
+
+
 void MainWindow::playMusic(const QStringList &urlList)
 {
     musicPlayer->playMusic(urlList);
+    musicScene->startAnimation();
+}
+
+void MainWindow::playLocalMusic(const QStringList &urlList)
+{
+    musicPlayer->playLocalMusic(urlList);
     musicScene->startAnimation();
 }
 
@@ -282,6 +313,17 @@ void MainWindow::playTableMusic(QTableWidget *musicTable, int row)
     playMusic(QStringList() << mp3Url << lyricUrl << albumUrl);
 }
 
+void MainWindow::playLocalTableMusic(QTableWidget *musicTable, int row)
+{
+    musicTable->selectRow(row);
+
+    QString mp3Path = musicTable->item(row, 0)->text();
+    QString lyricPath = musicTable->item(row, 1)->text();
+    QString albumPath = musicTable->item(row, 2)->text();
+
+    playLocalMusic(QStringList() << mp3Path << lyricPath << albumPath);
+}
+
 void MainWindow::on_playButton_clicked()
 {
     if (musicPlayer->mediaStatus() == QMediaPlayer::NoMedia) {
@@ -328,7 +370,11 @@ void MainWindow::on_nextButton_clicked()
         row = 0;
     }
 
-    playTableMusic(musicTable, row);
+    if (musicTable == ui->networkMusicTable) {
+        playTableMusic(musicTable, row);
+    } else {
+        playLocalTableMusic(musicTable, row);
+    }
 }
 
 
@@ -347,7 +393,11 @@ void MainWindow::on_prevButton_clicked()
         row = totalRow - 1;
     }
 
-    playTableMusic(musicTable, row);
+    if (musicTable == ui->networkMusicTable) {
+        playTableMusic(musicTable, row);
+    } else {
+        playLocalTableMusic(musicTable, row);
+    }
 }
 
 
@@ -385,7 +435,12 @@ void MainWindow::handlePlayerMediaStatus(QMediaPlayer::MediaStatus status)
                 return ;
             }
             int row = qrand() % totalRow;
-            playTableMusic(musicTable, row);
+
+            if (musicTable == ui->networkMusicTable) {
+                playTableMusic(musicTable, row);
+            } else {
+                playLocalTableMusic(musicTable, row);
+            }
         }
     }
 }
@@ -407,4 +462,10 @@ void MainWindow::on_serverAddressSetAction_triggered()
 {
     serverAddressSet->show();
 }
+
+
+
+
+
+
 

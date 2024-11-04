@@ -1,0 +1,7 @@
+{
+    "downloadMusicFlag": false,
+    "downloadPath": "/home/vito/workspace/embedded-base/qt-workspace/CloudMusic/build/Desktop_Qt_5_15_2_GCC_64bit-Release",
+    "serverIp": "192.168.239.1",
+    "serverPort": "8080",
+    "voiceSize": 10
+}

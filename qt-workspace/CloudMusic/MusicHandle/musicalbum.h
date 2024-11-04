@@ -15,11 +15,13 @@ public:
     QImage changeImageToARGB32(const QImage &image);
     QImage makeCircleImage(const QImage &image);
     QImage makeDiskImage(const QImage &image);
+
 signals:
     void musicAlbumReady(const QImage &image);
 
 public slots:
     void handleData(void);
+    void handleLocalData(const QString &filename);
 
 private:
     MusicHttp *musicHttp;

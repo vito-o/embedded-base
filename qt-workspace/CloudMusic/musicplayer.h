@@ -17,6 +17,7 @@ public:
     void searchMusic(const QString searchText);
     void playMusic(const QStringList &urlList);
 
+    void playLocalMusic(const QStringList &urlList);
 signals:
     void musicInformationReady(const MusicInformation &musicInfo);
     void musicLyricReady(const QString musicLyricText);

@@ -24,10 +24,15 @@ void MusicDownloadSetWidget::setDownloadPath(QString downloadPath)
 
 void MusicDownloadSetWidget::on_downloadSearchButton_clicked()
 {
+    QString currentDownloadPath = ui->downloadLineEdit->text();
+    if (currentDownloadPath.isEmpty()) {
+        currentDownloadPath = QDir::currentPath();
+    }
+
     QString downloadPath = QFileDialog::getExistingDirectory(
         this,
         tr("选择下载的路径"),
-        ".",
+        currentDownloadPath,
         QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
     );
 

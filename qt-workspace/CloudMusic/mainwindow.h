@@ -38,7 +38,9 @@ public:
     bool eventFilter(QObject *watched, QEvent *event);
     void playMusic(const QStringList &urlList);
     void playTableMusic(QTableWidget *musicTable, int row);
+    void playLocalTableMusic(QTableWidget *musicTable, int row);
 
+    void playLocalMusic(const QStringList &urlList);
 private slots:
     void on_searchlineEdit_returnPressed();
     void on_networkMusicTable_cellDoubleClicked(int row, int column);
@@ -66,6 +68,8 @@ private slots:
     void on_musicDownloadSetAction_triggered();
 
     void on_serverAddressSetAction_triggered();
+
+    void on_localMusicTable_cellDoubleClicked(int row, int column);
 
 private:
     Ui::MainWindow *ui;

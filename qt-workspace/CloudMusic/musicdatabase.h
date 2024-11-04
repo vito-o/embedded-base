@@ -16,6 +16,7 @@ signals:
 public slots:
     void recordMusic(const QStringList &musicInfo);
     void queryMusic();
+    void removeMusic(const QString &musicName, const QString &musicAlbum);
 signals:
 };
 

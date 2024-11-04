@@ -112,6 +112,23 @@ void MusicDatabase::queryMusic()
     }
 }
 
+void MusicDatabase::removeMusic(const QString &musicName, const QString &musicAlbum)
+{
+    QSqlDatabase musicDB = QSqlDatabase::database("music-database");
+    QSqlQuery query(musicDB);
+
+    query.prepare("delete from music where MusicName = ? and AlbumName = ?");
+    query.bindValue(0, musicName);
+    query.bindValue(1, musicAlbum);
+
+
+    bool ok = query.exec();
+    if (!ok) {
+        qDebug() << "Fail to delete music table, err: " << query.lastError().text();
+        return;
+    }
+}
+
 
 
 

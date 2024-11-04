@@ -15,11 +15,14 @@ public:
     QString getMusicLyricText() const;
     QMap<qint64, qint32> getLyricTimeMap() const;
 
+    void parseLocalLyric(const QString &filename);
+    void parseLyric(const QByteArray &data);
 signals:
     void lyricReady(void);
 
+
 public slots:
-    void parseLyric();
+    void parseNetworkLyric(void);
 
 private:
     MusicHttp *musicHttp;

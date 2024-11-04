@@ -42,7 +42,17 @@ void MusicPlayer::playMusic(const QStringList &urlList)
     musicAlbum->download(albumUrl);
 
     this->setMedia(QUrl(mp3Url));
-    this->setVolume(10);
+    this->play();
+}
+
+void MusicPlayer::playLocalMusic(const QStringList &urlList)
+{
+    QString mp3Path = urlList[0];
+    QString lyricPath = urlList[1];
+    QString albumPath = urlList[2];
+    this->setMedia(QUrl::fromLocalFile(mp3Path));
+    musicLyric->parseLocalLyric(lyricPath);
+    musicAlbum->handleLocalData(albumPath);
     this->play();
 }
 
@@ -52,6 +62,5 @@ void MusicPlayer::queryPlayLryicLineByTime(qint64 time)
     if (it != lyricTimeMap.end()) {
         int lineIndex = it.key() > time ? it.value() - 1 : it.value();
         emit playLyricLineChanged(lineIndex);
-        // qDebug() << lineIndex;
     }
 }
