@@ -1,0 +1,22 @@
+{
+	"list": [
+		{
+			"musicName":"起风了",
+			"albumName":"起风了",
+			"duration":325,
+			"path":"起风了",
+			"mp3":"music.mp3",
+			"lyric":"lyric.txt",
+			"img": "img.jpg"
+		},
+		{
+			"musicName":"若是月亮还没来1",
+			"albumName":"若是月亮还没来1",
+			"duration":253,
+			"path":"若是月亮还没来",
+			"mp3":"music.mp3",
+			"lyric":"lyric.txt",
+			"img": "img.jpg"
+		}
+	]
+}

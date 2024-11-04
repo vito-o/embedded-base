@@ -1,0 +1,13 @@
+{
+	"list": [
+		{
+			"musicName":"若是月亮还没来",
+			"albumName":"若是月亮还没来",
+			"duration":253,
+			"path":"若是月亮还没来",
+			"mp3":"music.mp3",
+			"lyric":"lyric.txt",
+			"img": "img.jpg"
+		}
+	]
+}
