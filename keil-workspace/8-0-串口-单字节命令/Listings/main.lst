@@ -1,0 +1,135 @@
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 17:33:23 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include <string.h>
+   4          
+   5          void init_UART()
+   6          {
+   7   1          // 1.设置串口工作模式
+   8   1          SM0 = 0;
+   9   1          SM1 = 1;
+  10   1        
+  11   1          // 2.设置波特率
+  12   1          // 2.1 SMOD
+  13   1          PCON &= 0x7F;
+  14   1          // 2.2 定时器1
+  15   1          // 2.2.1 工作模式设置
+  16   1          TMOD &= 0x0F;
+  17   1          TMOD |= 0x20;
+  18   1          // 2.2.2 溢出初始值设置
+  19   1          // 意思就是过来的时钟频率 在253的基础上，每个时钟频率加1， 达到溢出才产�
+             -�一次定时
+  20   1          TL1 = 253;
+  21   1          TH1 = 253;
+  22   1          // 2.2.3 启动定时器
+  23   1          TR1 = 1;
+  24   1        
+  25   1          // 3.接收数据相关
+  26   1          REN = 1; //开启数据接收
+  27   1          SM2 = 0; //是否检测停止位的有效性（高电平有效） 1:检测，0：不检测  
+  28   1          
+  29   1          // 4.串口中断相关配置
+  30   1          ES = 1;
+  31   1          EA = 1;
+  32   1          
+  33   1          RI = 0;
+  34   1          TI = 0;
+  35   1      }
+  36          // 是否正在发送
+  37          static char bit_is_sending = 0;
+  38          static char s_buffer = 0;
+  39          
+  40          // 发送一个字符数据
+  41          void UART_sendChar(char c)
+  42          {
+  43   1        while(bit_is_sending == 1);
+  44   1        bit_is_sending = 1;
+  45   1        SBUF = c;
+  46   1      }
+  47          
+  48          // 发送字符串
+  49          void UART_sendStr(char *str)
+  50          {
+  51   1        while(*str != '\0') {
+  52   2          UART_sendChar(*str);
+  53   2          str++;
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 17:33:23 PAGE 2   
+
+  54   2        } 
+  55   1      }
+  56          
+  57          // 验证是否接收数据
+  58          bit UART_receiveChar(char *c)
+  59          {
+  60   1        if (s_buffer) {
+  61   2          *c = s_buffer;
+  62   2          s_buffer = 0;
+  63   2          return 1;
+  64   2        } else {
+  65   2          return 0;
+  66   2        }
+  67   1      }
+  68          
+  69          
+  70          char c;
+  71          void main() 
+  72          {
+  73   1        init_UART();
+  74   1        
+  75   1        while(1)
+  76   1        {
+  77   2          if (UART_receiveChar(&c)) {
+  78   3            if(c == 'A') {
+  79   4              P2 = 0x00;
+  80   4              UART_sendStr("ok: LED is on");
+  81   4            } else if (c == 'B') {
+  82   4              P2 = 0xFF;
+  83   4              UART_sendStr("ok: LED is off");
+  84   4            } else {
+  85   4              UART_sendStr("Error: Unknown command");
+  86   4            }
+  87   3          }
+  88   2        }
+  89   1      
+  90   1      }
+  91          
+  92          
+  93          void UART_Routine(void) interrupt 4
+  94          {
+  95   1        if (RI == 1) {
+  96   2          s_buffer = SBUF;
+  97   2          
+  98   2          RI = 0; //在中断中手动对串口标志位重置
+  99   2        }
+ 100   1        
+ 101   1        if (TI == 1) {
+ 102   2          bit_is_sending = 0;
+ 103   2          
+ 104   2          TI = 0; //在中断中手动对串口标志位重置
+ 105   2        }
+ 106   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    156    ----
+   CONSTANT SIZE    =     52    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      3    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 17:33:23 PAGE 3   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

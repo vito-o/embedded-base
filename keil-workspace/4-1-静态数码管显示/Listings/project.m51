@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/04/2024  23:05:09  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/06/2024  08:47:15  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:008FH         PUBLIC        _Nixie
   D:0080H         PUBLIC        P0
   B:00A0H.2       PUBLIC        P2_2
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/04/2024  23:05:09  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/06/2024  08:47:15  PAGE 2
 
 
   B:00A0H.3       PUBLIC        P2_3

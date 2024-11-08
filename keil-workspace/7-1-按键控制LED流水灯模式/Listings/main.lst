@@ -1,0 +1,71 @@
+C51 COMPILER V9.54   MAIN                                                                  11/07/2024 16:32:41 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Timer0.h"
+   3          #include "Key.h"
+   4          #include <INTRINS.H>
+   5          
+   6          unsigned char keyNum;
+   7          unsigned char LEDMode;
+   8          
+   9          void main() 
+  10          {
+  11   1        P2 = 0xFE;
+  12   1        Timer0_Init();
+  13   1        while(1) 
+  14   1        {
+  15   2          keyNum = Key();
+  16   2          if (keyNum)
+  17   2          {
+  18   3            if(keyNum==1) {
+  19   4              LEDMode++;
+  20   4            } else if (keyNum >= 2) {
+  21   4              LEDMode = 0;
+  22   4            }
+  23   3          }
+  24   2        }
+  25   1      }
+  26          
+  27          
+  28          void Timer0_Routine() interrupt 1
+  29          {
+  30   1        static unsigned int T0Count;
+  31   1        
+  32   1        TH0 = 64535/256;
+  33   1        TL0 = 64535%256;
+  34   1        T0Count++;
+  35   1        
+  36   1        if (T0Count >= 1000)
+  37   1        {
+  38   2          T0Count = 0;
+  39   2          
+  40   2          if (LEDMode == 0)
+  41   2            P2 = _crol_(P2,1);
+  42   2          if (LEDMode == 1)
+  43   2            P2 = _cror_(P2,1);
+  44   2        }
+  45   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    118    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  11/07/2024 16:32:41 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

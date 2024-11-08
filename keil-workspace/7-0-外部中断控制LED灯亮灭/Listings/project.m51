@@ -1,0 +1,89 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/07/2024  10:35:46  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\project PRINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+            CODE    0006H     0011H     UNIT         ?PR?MAIN?MAIN
+            CODE    0017H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0023H     0003H     UNIT         ?PR?INT0_ROUTINE?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  B:00A8H.7       PUBLIC        EA
+  B:00A0H.0       PUBLIC        P2_0
+  B:00B0H.1       PUBLIC        P3_1
+  B:00B0H.2       PUBLIC        P3_2
+  C:0006H         PUBLIC        main
+  C:0023H         PUBLIC        Int0_Routine
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  -------         PROC          MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/07/2024  10:35:46  PAGE 2
+
+
+  C:0006H         LINE#         3
+  C:0006H         LINE#         4
+  C:0006H         LINE#         6
+  C:0008H         LINE#         7
+  C:000AH         LINE#         10
+  C:000CH         LINE#         12
+  C:000CH         LINE#         13
+  C:000CH         LINE#         14
+  C:000FH         LINE#         15
+  C:000FH         LINE#         16
+  C:0011H         LINE#         17
+  C:0013H         LINE#         19
+  C:0013H         LINE#         20
+  C:0015H         LINE#         21
+  C:0015H         LINE#         22
+  -------         ENDPROC       MAIN
+  -------         PROC          INT0_ROUTINE
+  C:0023H         LINE#         25
+  C:0023H         LINE#         27
+  C:0025H         LINE#         28
+  -------         ENDPROC       INT0_ROUTINE
+  -------         ENDMOD        MAIN
+
+Program Size: data=9.0 xdata=0 code=38
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,91 @@
+C51 COMPILER V9.54   MAIN                                                                  11/06/2024 08:48:33 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          /*
+   3          单片机直接扫描:
+   4          硬件设备简单，但会消耗大量的单片机cpu时间
+   5          （当前程序用的这个)
+   6          
+   7          也可以用
+   8          专用驱动芯片:
+   9            内部自带显存、扫描电路，单片机只需告诉它显示生命即可
+  10            TM1640
+  11          */
+  12          void Delay(unsigned int xms)    //@12.000MHz
+  13          {
+  14   1        unsigned char i, j;
+  15   1        while(xms)
+  16   1        {
+  17   2          i = 2;
+  18   2          j = 239;
+  19   2          do
+  20   2          {
+  21   3            while (--j);
+  22   3          } while (--i);
+  23   2          
+  24   2          xms--;
+  25   2        }
+  26   1        
+  27   1      }
+  28          
+  29          unsigned char NixieTable[] =  {
+  30            0x3F, 0x06, 0x5B, 0x4F,
+  31            0x66, 0x6D, 0x7D, 0x07,
+  32            0x7F, 0x6F
+  33          };
+  34          
+  35          void Nixie(unsigned char location, num)
+  36          {
+  37   1        switch(location)
+  38   1        {
+  39   2          case 1: P2_4=1;P2_3=1;P2_2=1;break;
+  40   2          case 2: P2_4=1;P2_3=1;P2_2=0;break;
+  41   2          case 3: P2_4=1;P2_3=0;P2_2=1;break;
+  42   2          case 4: P2_4=1;P2_3=0;P2_2=0;break;
+  43   2          case 5: P2_4=0;P2_3=1;P2_2=1;break;
+  44   2          case 6: P2_4=0;P2_3=1;P2_2=0;break;
+  45   2          case 7: P2_4=0;P2_3=0;P2_2=1;break;
+  46   2          case 8: P2_4=0;P2_3=0;P2_2=0;break;
+  47   2        }
+  48   1        P0=NixieTable[num];
+  49   1        
+  50   1        // 消影
+  51   1        Delay(1);
+  52   1        P0 = 0x00;
+  53   1      }
+  54          
+C51 COMPILER V9.54   MAIN                                                                  11/06/2024 08:48:33 PAGE 2   
+
+  55          void main () 
+  56          {
+  57   1        while(1) {
+  58   2          Nixie(1,1);
+  59   2          //Delay(200);
+  60   2          Nixie(2,2);
+  61   2          //Delay(200);
+  62   2          Nixie(3,3);
+  63   2          //Delay(200);
+  64   2        }
+  65   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

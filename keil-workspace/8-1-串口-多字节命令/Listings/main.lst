@@ -1,0 +1,164 @@
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 18:05:41 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <Timer0.h>
+   3          //#include "Delay.h"
+   4          #include <string.h>
+   5          
+   6          void init_UART()
+   7          {
+   8   1          // 1.设置串口工作模式
+   9   1          SM0 = 0;
+  10   1          SM1 = 1;
+  11   1        
+  12   1          // 2.设置波特率
+  13   1          // 2.1 SMOD
+  14   1          PCON &= 0x7F;
+  15   1          // 2.2 定时器1
+  16   1          // 2.2.1 工作模式设置
+  17   1          TMOD &= 0x0F;
+  18   1          TMOD |= 0x20;
+  19   1          // 2.2.2 溢出初始值设置
+  20   1          // 意思就是过来的时钟频率 在253的基础上，每个时钟频率加1， 达到溢出才产�
+             -�一次定时
+  21   1          TL1 = 253;
+  22   1          TH1 = 253;
+  23   1          // 2.2.3 启动定时器
+  24   1          TR1 = 1;
+  25   1        
+  26   1          // 3.接收数据相关
+  27   1          REN = 1; //开启数据接收
+  28   1          SM2 = 0; //是否检测停止位的有效性（高电平有效） 1:检测，0：不检测  
+  29   1          
+  30   1          // 4.串口中断相关配置
+  31   1          ES = 1;
+  32   1          EA = 1;
+  33   1          
+  34   1          RI = 0;
+  35   1          TI = 0;
+  36   1      }
+  37          
+  38          // 是否正在发送
+  39          static unsigned char bit_is_sending = 0;
+  40          // 接收数据变量
+  41          static unsigned char s_buffer[16] = {0};
+  42          static unsigned char s_index = 0;
+  43          
+  44          static unsigned char s_is_complete = 0;
+  45          static unsigned char s_time_count = 0;
+  46          
+  47          
+  48          // 发送一个字符数据
+  49          void UART_sendChar(char c)
+  50          {
+  51   1        while(bit_is_sending == 1);
+  52   1        bit_is_sending = 1;
+  53   1        SBUF = c;
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 18:05:41 PAGE 2   
+
+  54   1      }
+  55          
+  56          // 发送字符串
+  57          void UART_sendStr(char *str)
+  58          {
+  59   1        while(*str != '\0') {
+  60   2          UART_sendChar(*str);
+  61   2          str++;
+  62   2        } 
+  63   1      }
+  64          
+  65          // 验证是否接收数据
+  66          bit UART_receiveStr(char *str)
+  67          {
+  68   1        unsigned char i;
+  69   1        
+  70   1        if (s_is_complete) {
+  71   2          for(i = 0; i < s_index; i++) {
+  72   3            str[i] = s_buffer[i];
+  73   3          }
+  74   2          str[i] = '\0';
+  75   2          s_index = 0;
+  76   2          s_is_complete = 0;
+  77   2          
+  78   2          return 1;
+  79   2        } else {
+  80   2          return 0;
+  81   2        }
+  82   1      }
+  83          
+  84          char command[16] = {0};
+  85          void main() 
+  86          {
+  87   1        Timer0_Init();
+  88   1        init_UART();
+  89   1        
+  90   1        while(1)
+  91   1        {
+  92   2          if (UART_receiveStr(command)) {
+  93   3            if(strcmp(command, "on") == 0) {
+  94   4              P2 = 0x00;
+  95   4              UART_sendStr("ok: LED is on");
+  96   4            } else if (strcmp(command, "off") == 0) {
+  97   4              P2 = 0xFF;
+  98   4              UART_sendStr("ok: LED is off");
+  99   4            } else {
+ 100   4              UART_sendStr("Error: Unknown command");
+ 101   4            }
+ 102   3          }
+ 103   2        }
+ 104   1      
+ 105   1      }
+ 106          
+ 107          
+ 108          void UART_Routine(void) interrupt 4
+ 109          {
+ 110   1        if (RI == 1) {
+ 111   2          //s_buffer = SBUF;
+ 112   2          s_buffer[s_index++] = SBUF;
+ 113   2          s_time_count = 0; //定时器，每次接收到数据后，s_time_count重置
+ 114   2          RI = 0; //在中断中手动对串口标志位重置
+ 115   2        }
+C51 COMPILER V9.54   MAIN                                                                  11/08/2024 18:05:41 PAGE 3   
+
+ 116   1        
+ 117   1        if (TI == 1) {
+ 118   2          bit_is_sending = 0;
+ 119   2          
+ 120   2          TI = 0; //在中断中手动对串口标志位重置
+ 121   2        }
+ 122   1      }
+ 123          
+ 124          // 定时器
+ 125          void Timer0_Routine() interrupt 1
+ 126          {
+ 127   1        TH0 = 64535/256;
+ 128   1        TL0 = 64535%256;
+ 129   1        s_time_count++;
+ 130   1        
+ 131   1        if (s_index > 0 && s_time_count >= 10) {
+ 132   2          s_is_complete = 1;
+ 133   2          s_time_count = 0;
+ 134   2        }
+ 135   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    299    ----
+   CONSTANT SIZE    =     59    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     36       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

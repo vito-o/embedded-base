@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/05/2024  15:12:09  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/06/2024  08:52:19  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -32,9 +32,9 @@ LINK MAP OF MODULE:  .\Objects\project (MAIN)
             CODE    0000H     0003H     ABSOLUTE     
             CODE    0003H     008CH     UNIT         ?C_C51STARTUP
             CODE    008FH     006DH     UNIT         ?PR?_NIXIE?NIXIE
-            CODE    00FCH     003DH     UNIT         ?PR?MAIN?MAIN
-            CODE    0139H     0014H     UNIT         ?PR?_DELAY?DELAY
-            CODE    014DH     000DH     UNIT         ?C_INITSEG
+            CODE    00FCH     0038H     UNIT         ?PR?MAIN?MAIN
+            CODE    0134H     0014H     UNIT         ?PR?_DELAY?DELAY
+            CODE    0148H     000DH     UNIT         ?C_INITSEG
 
 
 
@@ -49,7 +49,6 @@ SEGMENT
   +--> ?C_INITSEG
 
 ?PR?MAIN?MAIN
-  +--> ?PR?_DELAY?DELAY
   +--> ?PR?_NIXIE?NIXIE
 
 ?PR?_NIXIE?NIXIE
@@ -59,10 +58,10 @@ SEGMENT
 
 SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
 
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/05/2024  15:12:09  PAGE 2
-
-
   VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/06/2024  08:52:19  PAGE 2
+
+
   ----------------------------------
 
   -------         MODULE        MAIN
@@ -71,37 +70,38 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   -------         PROC          MAIN
   C:00FCH         LINE#         5
   C:00FCH         LINE#         6
-  C:00FCH         LINE#         7
-  C:0103H         LINE#         9
-  C:010CH         LINE#         10
-  C:0115H         LINE#         11
-  C:011EH         LINE#         12
-  C:0127H         LINE#         13
-  C:0130H         LINE#         14
+  C:00FCH         LINE#         9
+  C:00FCH         LINE#         10
+  C:0105H         LINE#         11
+  C:010EH         LINE#         12
+  C:0117H         LINE#         13
+  C:0120H         LINE#         14
+  C:0129H         LINE#         15
+  C:0132H         LINE#         16
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAIN
 
   -------         MODULE        DELAY
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0139H         PUBLIC        _Delay
+  C:0134H         PUBLIC        _Delay
   -------         PROC          _DELAY
   D:0006H         SYMBOL        xms
   -------         DO            
   D:0005H         SYMBOL        i
   D:0004H         SYMBOL        j
   -------         ENDDO         
-  C:0139H         LINE#         1
-  C:0139H         LINE#         2
-  C:0139H         LINE#         4
-  C:013DH         LINE#         5
-  C:013DH         LINE#         6
-  C:013FH         LINE#         7
-  C:0141H         LINE#         9
-  C:0141H         LINE#         10
-  C:0143H         LINE#         11
-  C:0145H         LINE#         13
-  C:014AH         LINE#         14
-  C:014CH         LINE#         15
+  C:0134H         LINE#         1
+  C:0134H         LINE#         2
+  C:0134H         LINE#         4
+  C:0138H         LINE#         5
+  C:0138H         LINE#         6
+  C:013AH         LINE#         7
+  C:013CH         LINE#         9
+  C:013CH         LINE#         10
+  C:013EH         LINE#         11
+  C:0140H         LINE#         13
+  C:0145H         LINE#         14
+  C:0147H         LINE#         15
   -------         ENDPROC       _DELAY
   -------         ENDMOD        DELAY
 
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:008FH         LINE#         10
   C:008FH         LINE#         11
   C:008FH         LINE#         12
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/05/2024  15:12:09  PAGE 3
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/06/2024  08:52:19  PAGE 3
 
 
   C:00BCH         LINE#         13
@@ -139,5 +139,5 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   -------         ENDPROC       _NIXIE
   -------         ENDMOD        NIXIE
 
-Program Size: data=19.0 xdata=0 code=346
+Program Size: data=19.0 xdata=0 code=341
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
