@@ -1,0 +1,202 @@
+C51 COMPILER V9.54   MAIN                                                                  11/13/2024 20:44:21 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "LCD1602.h"
+   3          #include "DS1302.h"
+   4          #include "Key.h"
+   5          #include "Timer0.h"
+   6          
+   7          unsigned char keyNum, mode, timeSetSelect, timeSetFlashFlag;
+   8          
+   9          void timeShow()
+  10          {
+  11   1          DS1302_readTime();
+  12   1          
+  13   1          LCD_ShowNum(1, 1, DS1302_Time[0], 2);
+  14   1          LCD_ShowNum(1, 4, DS1302_Time[1], 2);
+  15   1          LCD_ShowNum(1, 7, DS1302_Time[2], 2);
+  16   1          LCD_ShowNum(2, 1, DS1302_Time[3], 2);
+  17   1          LCD_ShowNum(2, 4, DS1302_Time[4], 2);
+  18   1          LCD_ShowNum(2, 7, DS1302_Time[5], 2);
+  19   1      }
+  20          
+  21          void timeSet()
+  22          {
+  23   1        if (keyNum == 2) // 按键2 按下
+  24   1        {
+  25   2          timeSetSelect++;    // 设置选择位+1
+  26   2          timeSetSelect %= 6; // 处理越界
+  27   2        }
+  28   1        
+  29   1        if (keyNum == 3) // 按键3 按下
+  30   1        {
+  31   2          DS1302_Time[timeSetSelect]++; //时间设置位数+1
+  32   2          
+  33   2          //判断越界
+  34   2          //年
+  35   2          if (DS1302_Time[0] > 99) DS1302_Time[0] = 0;
+  36   2          //月
+  37   2          if (DS1302_Time[1] > 12) DS1302_Time[1] = 1;
+  38   2          //日
+  39   2          if (DS1302_Time[1] == 1 || DS1302_Time[1] == 3 || DS1302_Time[1] == 5 || DS1302_Time[1] == 7 || DS1302_T
+             -ime[1] == 8 || DS1302_Time[1] == 10 || DS1302_Time[1] == 12)
+  40   2          { //大月
+  41   3            if (DS1302_Time[2] > 31) DS1302_Time[2] = 1;
+  42   3          }
+  43   2          if (DS1302_Time[1] == 4 || DS1302_Time[1] == 6 || DS1302_Time[1] == 9 || DS1302_Time[1] == 11)
+  44   2          { //小月
+  45   3            if (DS1302_Time[2] > 30) DS1302_Time[2] = 1;
+  46   3          }
+  47   2          if (DS1302_Time[1] == 2)
+  48   2          { //二月
+  49   3            if (DS1302_Time[0]%4==0) { // 闰年
+  50   4              if (DS1302_Time[2] > 29) DS1302_Time[2] = 1;
+  51   4            }
+  52   3            else {
+  53   4              if (DS1302_Time[2] > 28) DS1302_Time[2] = 1;
+C51 COMPILER V9.54   MAIN                                                                  11/13/2024 20:44:21 PAGE 2   
+
+  54   4            }
+  55   3          }
+  56   2          // 时
+  57   2          if (DS1302_Time[3] > 23) DS1302_Time[3] = 0;
+  58   2          // 分
+  59   2          if (DS1302_Time[4] > 59) DS1302_Time[4] = 0;
+  60   2          // 秒
+  61   2          if (DS1302_Time[5] > 59) DS1302_Time[5] = 0;
+  62   2        }
+  63   1        
+  64   1        if (keyNum == 4) // 按键4 按下
+  65   1        {
+  66   2          DS1302_Time[timeSetSelect]--; //时间设置位数+1
+  67   2          //判断越界
+  68   2          //年
+  69   2          if (DS1302_Time[0] < 0) DS1302_Time[0] = 99;
+  70   2          //月
+  71   2          if (DS1302_Time[1] < 1) DS1302_Time[1] = 12;
+  72   2          //日
+  73   2          if (DS1302_Time[1] == 1 || DS1302_Time[1] == 3 || DS1302_Time[1] == 5 || DS1302_Time[1] == 7 || DS1302_T
+             -ime[1] == 8 || DS1302_Time[1] == 10 || DS1302_Time[1] == 12)
+  74   2          { //大月
+  75   3            if (DS1302_Time[2] < 1)  DS1302_Time[2] = 31;
+  76   3            if (DS1302_Time[2] > 31) DS1302_Time[2] = 1;
+  77   3          }
+  78   2          if (DS1302_Time[1] == 4 || DS1302_Time[1] == 6 || DS1302_Time[1] == 9 || DS1302_Time[1] == 11)
+  79   2          { //小月
+  80   3            if (DS1302_Time[2] < 1)  DS1302_Time[2] = 30;
+  81   3            if (DS1302_Time[2] > 30) DS1302_Time[2] = 1;
+  82   3          }
+  83   2          if (DS1302_Time[1] == 2)
+  84   2          { //二月
+  85   3            if (DS1302_Time[0]%4==0) { // 闰年
+  86   4              if (DS1302_Time[2] < 1)  DS1302_Time[2] = 29;
+  87   4              if (DS1302_Time[2] > 29) DS1302_Time[2] = 1;
+  88   4            }
+  89   3            else {
+  90   4              if (DS1302_Time[2] < 1 ) DS1302_Time[2] = 28;
+  91   4              if (DS1302_Time[2] > 28) DS1302_Time[2] = 1;
+  92   4            }
+  93   3          }
+  94   2          // 时
+  95   2          if (DS1302_Time[3] < 0) DS1302_Time[3] = 23;
+  96   2          // 分
+  97   2          if (DS1302_Time[4] < 0) DS1302_Time[4] = 59;
+  98   2          // 秒
+  99   2          if (DS1302_Time[5] < 0) DS1302_Time[5] = 59;
+ 100   2        }
+ 101   1        
+ 102   1        //更新显示，根据TimeSetSelect和TimeSetFlashFlag判断可完成闪烁功能
+ 103   1        //timeSetSelect, timeSetFlashFlag
+ 104   1        if (timeSetSelect==0 && timeSetFlashFlag==1) LCD_ShowString(1, 1, "  ");
+ 105   1        else LCD_ShowNum(1, 1, DS1302_Time[0], 2);
+ 106   1        if (timeSetSelect==1 && timeSetFlashFlag==1) LCD_ShowString(1, 4, "  ");
+ 107   1        else LCD_ShowNum(1, 4, DS1302_Time[1], 2);
+ 108   1        if (timeSetSelect==2 && timeSetFlashFlag==1) LCD_ShowString(1, 7, "  ");
+ 109   1        else LCD_ShowNum(1, 7, DS1302_Time[2], 2);
+ 110   1        if (timeSetSelect==3 && timeSetFlashFlag==1) LCD_ShowString(2, 1, "  ");
+ 111   1        else LCD_ShowNum(2, 1, DS1302_Time[3], 2);
+ 112   1        if (timeSetSelect==4 && timeSetFlashFlag==1) LCD_ShowString(2, 4, "  ");
+ 113   1        else LCD_ShowNum(2, 4, DS1302_Time[4], 2);
+ 114   1        if (timeSetSelect==5 && timeSetFlashFlag==1) LCD_ShowString(2, 7, "  ");
+C51 COMPILER V9.54   MAIN                                                                  11/13/2024 20:44:21 PAGE 3   
+
+ 115   1        else LCD_ShowNum(2, 7, DS1302_Time[5], 2);
+ 116   1        
+ 117   1      }
+ 118          
+ 119          void main(){
+ 120   1        
+ 121   1        LCD_Init();
+ 122   1        DS1302_Init();
+ 123   1        Timer0Init();
+ 124   1        
+ 125   1        LCD_ShowString(1, 1, "  -  -  ");
+ 126   1        LCD_ShowString(2, 1, "  :  :  ");
+ 127   1        //如果读出时间为一个大于59并且不动的数，则芯片可能是处于写保护状态，在�
+             -�处加上这行代码即可解除芯片写保护
+ 128   1        //DS1302_WriteByte(0x8E, 0x00);
+ 129   1        
+ 130   1        DS1302_setTime();
+ 131   1        
+ 132   1        while(1) {
+ 133   2          
+ 134   2          keyNum = Key();
+ 135   2          if (keyNum == 1) // 按键1 按下
+ 136   2          {
+ 137   3            // 功能切换
+ 138   3            if (mode == 0) {
+ 139   4              mode = 1;
+ 140   4              timeSetSelect = 0;
+ 141   4            }
+ 142   3            else if(mode == 1) {
+ 143   4              mode = 0;
+ 144   4              DS1302_setTime();
+ 145   4            }
+ 146   3          }
+ 147   2          
+ 148   2          switch(mode)
+ 149   2          {
+ 150   3            case 0: timeShow();break;
+ 151   3            case 1: timeSet();break;
+ 152   3          }
+ 153   2          
+ 154   2        }
+ 155   1      }
+ 156          
+ 157          
+ 158          void Timer0_Routine() interrupt 1
+ 159          {
+ 160   1        static unsigned int T0Count;
+ 161   1        TL0 = 0x18;   //设置定时初值
+ 162   1        TH0 = 0xFC;   //设置定时初值
+ 163   1        T0Count++;
+ 164   1        if(T0Count>=500)
+ 165   1        {
+ 166   2          T0Count=0;
+ 167   2          timeSetFlashFlag = !timeSetFlashFlag;
+ 168   2        }
+ 169   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    891    ----
+   CONSTANT SIZE    =     21    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  11/13/2024 20:44:21 PAGE 4   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
