@@ -1,0 +1,173 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/15/2024  09:59:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\C51\BIN\BL51.EXE .\Objects\main.obj TO .\Objects\project PRINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  .\Objects\project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     002BH     UNIT         ?PR?_DIR_IIC_SENDBYTE?MAIN
+            CODE    002EH     0018H     UNIT         ?PR?DIR_IIC_RECEIVEBYTE?MAIN
+            CODE    0046H     000CH     UNIT         ?PR?DRI_IIC_RECEIVEACK?MAIN
+            CODE    0052H     000CH     UNIT         ?C_C51STARTUP
+            CODE    005EH     000AH     UNIT         ?PR?_DIR_IIC_SENDACK?MAIN
+            CODE    0068H     0009H     UNIT         ?PR?DIR_IIC_START?MAIN
+            CODE    0071H     0007H     UNIT         ?PR?DIR_IIC_STOP?MAIN
+            CODE    0078H     0002H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:0046H         PUBLIC        Dri_IIC_ReceiveAck
+  C:002EH         PUBLIC        Dir_IIC_ReceiveByte
+  C:0078H         PUBLIC        main
+  C:0068H         PUBLIC        Dir_IIC_Start
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  09:59:45  PAGE 2
+
+
+  C:005EH         PUBLIC        _Dir_IIC_SendAck
+  B:00A0H.0       PUBLIC        SDA
+  C:0003H         PUBLIC        _Dir_IIC_SendByte
+  C:0071H         PUBLIC        Dir_IIC_Stop
+  B:00A0H.1       PUBLIC        SCL
+  -------         PROC          DIR_IIC_START
+  C:0068H         LINE#         6
+  C:0068H         LINE#         7
+  C:0068H         LINE#         9
+  C:006AH         LINE#         10
+  C:006CH         LINE#         12
+  C:006EH         LINE#         15
+  C:0070H         LINE#         16
+  -------         ENDPROC       DIR_IIC_START
+  -------         PROC          _DIR_IIC_SENDBYTE
+  D:0005H         SYMBOL        byte
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:0003H         LINE#         19
+  C:0005H         LINE#         20
+  C:0005H         LINE#         22
+  C:0007H         LINE#         23
+  C:0007H         LINE#         24
+  C:0025H         LINE#         25
+  C:0027H         LINE#         26
+  C:0029H         LINE#         27
+  C:002DH         LINE#         28
+  -------         ENDPROC       _DIR_IIC_SENDBYTE
+  -------         PROC          DRI_IIC_RECEIVEACK
+  -------         DO            
+  D:0007H         SYMBOL        ack
+  -------         ENDDO         
+  C:0046H         LINE#         31
+  C:0046H         LINE#         32
+  C:0046H         LINE#         36
+  C:0048H         LINE#         39
+  C:004AH         LINE#         40
+  C:004FH         LINE#         43
+  C:0051H         LINE#         45
+  C:0051H         LINE#         46
+  -------         ENDPROC       DRI_IIC_RECEIVEACK
+  -------         PROC          DIR_IIC_RECEIVEBYTE
+  -------         DO            
+  D:0007H         SYMBOL        byte
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:002EH         LINE#         49
+  C:002EH         LINE#         50
+  C:002EH         LINE#         51
+  C:0030H         LINE#         55
+  C:0032H         LINE#         56
+  C:0033H         LINE#         57
+  C:0033H         LINE#         59
+  C:0035H         LINE#         60
+  C:003FH         LINE#         62
+  C:0041H         LINE#         63
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  09:59:45  PAGE 3
+
+
+  C:0045H         LINE#         64
+  C:0045H         LINE#         65
+  -------         ENDPROC       DIR_IIC_RECEIVEBYTE
+  -------         PROC          _DIR_IIC_SENDACK
+  D:0007H         SYMBOL        ack
+  C:005EH         LINE#         68
+  C:005EH         LINE#         69
+  C:005EH         LINE#         71
+  C:0063H         LINE#         73
+  C:0065H         LINE#         75
+  C:0067H         LINE#         76
+  -------         ENDPROC       _DIR_IIC_SENDACK
+  -------         PROC          DIR_IIC_STOP
+  C:0071H         LINE#         79
+  C:0071H         LINE#         80
+  C:0071H         LINE#         83
+  C:0073H         LINE#         84
+  C:0075H         LINE#         85
+  C:0077H         LINE#         86
+  -------         ENDPROC       DIR_IIC_STOP
+  -------         PROC          MAIN
+  C:0078H         LINE#         88
+  C:0078H         LINE#         89
+  C:0078H         LINE#         91
+  C:0078H         LINE#         92
+  C:0078H         LINE#         94
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DIR_IIC_START?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DIR_IIC_SENDBYTE?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DRI_IIC_RECEIVEACK?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DIR_IIC_RECEIVEBYTE?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DIR_IIC_SENDACK?MAIN
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DIR_IIC_STOP?MAIN
+
+Program Size: data=9.0 xdata=0 code=122
+LINK/LOCATE RUN COMPLETE.  6 WARNING(S),  0 ERROR(S)

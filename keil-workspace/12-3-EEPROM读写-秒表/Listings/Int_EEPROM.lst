@@ -1,0 +1,120 @@
+C51 COMPILER V9.54   INT_EEPROM                                                            11/15/2024 15:20:15 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE INT_EEPROM
+OBJECT MODULE PLACED IN .\Objects\Int_EEPROM.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE Int_EEPROM.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\Int_EEPROM.lst) TABS(2) OBJECT(.\Objects\Int_EEPROM.obj)
+
+line level    source
+
+   1          #include "Dri_IIC.h"
+   2          #include "Delay.h"
+   3          
+   4          #define DEV_ADDR 0xA0
+   5          #define PAGE_SIZE 16
+   6          
+   7          unsigned char Int_EEPROM_WritePage(unsigned char addr, unsigned char *bytes, unsigned char len)
+   8          {
+   9   1        unsigned char ack = 0;
+  10   1        unsigned char i;
+  11   1        
+  12   1        //发送起始信号
+  13   1        Dir_IIC_Start();
+  14   1        
+  15   1        //发送设备地址
+  16   1        Dir_IIC_SendByte(DEV_ADDR);
+  17   1        ack |= Dri_IIC_ReceiveAck();
+  18   1        
+  19   1        //发送字地址
+  20   1        Dir_IIC_SendByte(addr);
+  21   1        ack |= Dri_IIC_ReceiveAck();
+  22   1        
+  23   1        for(i = 0; i < len; i++) {
+  24   2          Dir_IIC_SendByte(bytes[i]);
+  25   2          ack |= Dri_IIC_ReceiveAck();
+  26   2        }
+  27   1        
+  28   1        //发送结束信号
+  29   1        Dir_IIC_Stop();
+  30   1        
+  31   1        //等待EEPROM内部写入完成
+  32   1        Delay(5);
+  33   1        
+  34   1        return ack;
+  35   1      }
+  36          
+  37          unsigned char Int_EEPROM_WriteBytes(unsigned char addr, unsigned char *bytes, unsigned char len)
+  38          {
+  39   1        //当前页剩余空间
+  40   1        unsigned char page_remain;
+  41   1        unsigned char ack = 0;
+  42   1        
+  43   1        while(len > 0) {
+  44   2          page_remain = PAGE_SIZE - (addr % PAGE_SIZE);
+  45   2          if (len > page_remain) {
+  46   3            // 当前页面空间不足，先写满当前页
+  47   3            ack |= Int_EEPROM_WritePage(addr, bytes, page_remain);
+  48   3            // 剩余内容写到下一页
+  49   3            len -= page_remain;
+  50   3            bytes += page_remain;
+  51   3            addr += page_remain;
+  52   3            
+  53   3          } else {
+  54   3            // 当页面空间足够，直接写入剩余内容
+C51 COMPILER V9.54   INT_EEPROM                                                            11/15/2024 15:20:15 PAGE 2   
+
+  55   3            ack |= Int_EEPROM_WritePage(addr, bytes, len);
+  56   3            len = 0;
+  57   3          }
+  58   2        }
+  59   1      }
+*** WARNING C173 IN LINE 59 OF Int_EEPROM.c: missing return-expression
+  60          
+  61          
+  62          unsigned char Int_EEPROM_ReadBytes(unsigned char addr, unsigned char *bytes, unsigned char len)
+  63          {
+  64   1        unsigned char ack = 0;
+  65   1        unsigned char i;
+  66   1        
+  67   1        //发送起始信号
+  68   1        Dir_IIC_Start();
+  69   1        
+  70   1        //发送设备地址
+  71   1        Dir_IIC_SendByte(DEV_ADDR);
+  72   1        ack |= Dri_IIC_ReceiveAck();
+  73   1        
+  74   1        //发送字地址
+  75   1        Dir_IIC_SendByte(addr);
+  76   1        ack |= Dri_IIC_ReceiveAck();
+  77   1        
+  78   1        //再次发送起始信号
+  79   1        Dir_IIC_Start();
+  80   1        //发送设备地址
+  81   1        Dir_IIC_SendByte(DEV_ADDR+1);
+  82   1        ack |= Dri_IIC_ReceiveAck();
+  83   1        //读取数据
+  84   1        for (i = 0; i < len; i++) {
+  85   2          bytes[i] = Dir_IIC_ReceiveByte();
+  86   2          Dir_IIC_SendAck(i==len-1 ? 1:0);
+  87   2        }
+  88   1        //发送结束信号
+  89   1        Dir_IIC_Stop();
+  90   1        
+  91   1        return ack;
+  92   1      }
+*** WARNING C290 IN LINE 59 OF Int_EEPROM.c: missing return value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    287    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      21
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

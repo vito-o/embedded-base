@@ -1,0 +1,395 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/15/2024  10:41:46  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+D:\SOFTWARE\KEIL\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\Dri_IIC.obj, .\Objects\Int_EEPROM.obj, .\Objects\Delay.o
+>> bj, .\Objects\MatrixLED.obj TO .\Objects\project PRINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\Dri_IIC.obj (DRI_IIC)
+  .\Objects\Int_EEPROM.obj (INT_EEPROM)
+  .\Objects\Delay.obj (DELAY)
+  .\Objects\MatrixLED.obj (MATRIXLED)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C?CSTOPTR)
+  D:\SOFTWARE\KEIL\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0043H     UNIT         ?DT?MAIN
+            DATA    004BH     0007H     UNIT         ?DT?_INT_EEPROM_WRITEPAGE?INT_EEPROM
+            DATA    0052H     0007H     UNIT         ?DT?_INT_EEPROM_WRITEBYTES?INT_EEPROM
+            DATA    0059H     0007H     UNIT         _DATA_GROUP_
+            IDATA   0060H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0068H     UNIT         ?PR?_INT_EEPROM_READBYTES?INT_EEPROM
+            CODE    00F7H     005FH     UNIT         ?PR?_INT_EEPROM_WRITEBYTES?INT_EEPROM
+            CODE    0156H     0058H     UNIT         ?PR?_INT_EEPROM_WRITEPAGE?INT_EEPROM
+            CODE    01AEH     004FH     UNIT         ?C?LIB_CODE
+            CODE    01FDH     0045H     UNIT         ?PR?MAIN?MAIN
+            CODE    0242H     002DH     UNIT         ?PR?__74HC595_WRITEBYTE?MATRIXLED
+            CODE    026FH     002BH     UNIT         ?PR?_DIR_IIC_SENDBYTE?DRI_IIC
+            CODE    029AH     002AH     UNIT         ?C_INITSEG
+            CODE    02C4H     0024H     UNIT         ?PR?_MATRIXLED_SHOWCOLINDEX?MATRIXLED
+            CODE    02E8H     0018H     UNIT         ?PR?DIR_IIC_RECEIVEBYTE?DRI_IIC
+            CODE    0300H     0014H     UNIT         ?PR?_DELAY?DELAY
+            CODE    0314H     000CH     UNIT         ?PR?DRI_IIC_RECEIVEACK?DRI_IIC
+            CODE    0320H     000AH     UNIT         ?PR?_DIR_IIC_SENDACK?DRI_IIC
+            CODE    032AH     0009H     UNIT         ?PR?DIR_IIC_START?DRI_IIC
+            CODE    0333H     0007H     UNIT         ?PR?DIR_IIC_STOP?DRI_IIC
+            CODE    033AH     0005H     UNIT         ?PR?MATRIXLED_INIT?MATRIXLED
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 2
+
+
+
+SEGMENT                                         DATA_GROUP 
+  +--> CALLED SEGMENT                         START    LENGTH
+-------------------------------------------------------------
+?C_C51STARTUP                                 -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                                 -----    -----
+  +--> ?PR?MATRIXLED_INIT?MATRIXLED
+  +--> ?PR?_INT_EEPROM_READBYTES?INT_EEPROM
+  +--> ?PR?_MATRIXLED_SHOWCOLINDEX?MATRIXLED
+
+?PR?_INT_EEPROM_READBYTES?INT_EEPROM          0059H    0007H
+  +--> ?PR?DIR_IIC_START?DRI_IIC
+  +--> ?PR?_DIR_IIC_SENDBYTE?DRI_IIC
+  +--> ?PR?DRI_IIC_RECEIVEACK?DRI_IIC
+  +--> ?PR?DIR_IIC_RECEIVEBYTE?DRI_IIC
+  +--> ?PR?_DIR_IIC_SENDACK?DRI_IIC
+  +--> ?PR?DIR_IIC_STOP?DRI_IIC
+
+?PR?_MATRIXLED_SHOWCOLINDEX?MATRIXLED         -----    -----
+  +--> ?PR?__74HC595_WRITEBYTE?MATRIXLED
+  +--> ?PR?_DELAY?DELAY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0008H         PUBLIC        offset
+  D:0009H         PUBLIC        Animation
+  C:01FDH         PUBLIC        main
+  D:0029H         PUBLIC        cout
+  D:002AH         PUBLIC        i
+  D:002BH         PUBLIC        cache
+  -------         PROC          MAIN
+  C:01FDH         LINE#         25
+  C:01FDH         LINE#         26
+  C:01FDH         LINE#         28
+  C:0200H         LINE#         32
+  C:020EH         LINE#         34
+  C:020EH         LINE#         35
+  C:0211H         LINE#         36
+  C:0211H         LINE#         37
+  C:021FH         LINE#         38
+  C:0228H         LINE#         39
+  C:022AH         LINE#         41
+  C:0231H         LINE#         42
+  C:0231H         LINE#         43
+  C:0234H         LINE#         44
+  C:0236H         LINE#         45
+  C:023DH         LINE#         46
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 3
+
+
+  C:023DH         LINE#         47
+  C:0240H         LINE#         48
+  C:0240H         LINE#         49
+  C:0240H         LINE#         50
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DRI_IIC
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00A0H         PUBLIC        P2
+  C:0314H         PUBLIC        Dri_IIC_ReceiveAck
+  C:02E8H         PUBLIC        Dir_IIC_ReceiveByte
+  C:032AH         PUBLIC        Dir_IIC_Start
+  C:0320H         PUBLIC        _Dir_IIC_SendAck
+  B:00A0H.0       PUBLIC        SDA
+  C:026FH         PUBLIC        _Dir_IIC_SendByte
+  C:0333H         PUBLIC        Dir_IIC_Stop
+  B:00A0H.1       PUBLIC        SCL
+  -------         PROC          DIR_IIC_START
+  C:032AH         LINE#         6
+  C:032AH         LINE#         7
+  C:032AH         LINE#         9
+  C:032CH         LINE#         10
+  C:032EH         LINE#         12
+  C:0330H         LINE#         15
+  C:0332H         LINE#         16
+  -------         ENDPROC       DIR_IIC_START
+  -------         PROC          _DIR_IIC_SENDBYTE
+  D:0005H         SYMBOL        byte
+  -------         DO            
+  D:0004H         SYMBOL        i
+  -------         ENDDO         
+  C:026FH         LINE#         19
+  C:0271H         LINE#         20
+  C:0271H         LINE#         22
+  C:0273H         LINE#         23
+  C:0273H         LINE#         24
+  C:0291H         LINE#         25
+  C:0293H         LINE#         26
+  C:0295H         LINE#         27
+  C:0299H         LINE#         28
+  -------         ENDPROC       _DIR_IIC_SENDBYTE
+  -------         PROC          DRI_IIC_RECEIVEACK
+  -------         DO            
+  D:0007H         SYMBOL        ack
+  -------         ENDDO         
+  C:0314H         LINE#         31
+  C:0314H         LINE#         32
+  C:0314H         LINE#         36
+  C:0316H         LINE#         39
+  C:0318H         LINE#         40
+  C:031DH         LINE#         43
+  C:031FH         LINE#         45
+  C:031FH         LINE#         46
+  -------         ENDPROC       DRI_IIC_RECEIVEACK
+  -------         PROC          DIR_IIC_RECEIVEBYTE
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 4
+
+
+  D:0007H         SYMBOL        byte
+  D:0006H         SYMBOL        i
+  -------         ENDDO         
+  C:02E8H         LINE#         49
+  C:02E8H         LINE#         50
+  C:02E8H         LINE#         51
+  C:02EAH         LINE#         55
+  C:02ECH         LINE#         56
+  C:02EDH         LINE#         57
+  C:02EDH         LINE#         59
+  C:02EFH         LINE#         60
+  C:02F9H         LINE#         62
+  C:02FBH         LINE#         63
+  C:02FFH         LINE#         64
+  C:02FFH         LINE#         65
+  -------         ENDPROC       DIR_IIC_RECEIVEBYTE
+  -------         PROC          _DIR_IIC_SENDACK
+  D:0007H         SYMBOL        ack
+  C:0320H         LINE#         68
+  C:0320H         LINE#         69
+  C:0320H         LINE#         71
+  C:0325H         LINE#         73
+  C:0327H         LINE#         75
+  C:0329H         LINE#         76
+  -------         ENDPROC       _DIR_IIC_SENDACK
+  -------         PROC          DIR_IIC_STOP
+  C:0333H         LINE#         79
+  C:0333H         LINE#         80
+  C:0333H         LINE#         83
+  C:0335H         LINE#         84
+  C:0337H         LINE#         85
+  C:0339H         LINE#         86
+  -------         ENDPROC       DIR_IIC_STOP
+  -------         ENDMOD        DRI_IIC
+
+  -------         MODULE        INT_EEPROM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:008FH         PUBLIC        _Int_EEPROM_ReadBytes
+  C:0156H         PUBLIC        _Int_EEPROM_WritePage
+  C:00F7H         PUBLIC        _Int_EEPROM_WriteBytes
+  -------         PROC          _INT_EEPROM_WRITEPAGE
+  D:004BH         SYMBOL        addr
+  D:004CH         SYMBOL        bytes
+  D:004FH         SYMBOL        len
+  -------         DO            
+  D:0050H         SYMBOL        ack
+  D:0051H         SYMBOL        i
+  -------         ENDDO         
+  C:0156H         LINE#         7
+  C:015EH         LINE#         8
+  C:015EH         LINE#         9
+  C:0161H         LINE#         13
+  C:0164H         LINE#         16
+  C:0169H         LINE#         17
+  C:016FH         LINE#         20
+  C:0174H         LINE#         21
+  C:017AH         LINE#         23
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 5
+
+
+  C:0184H         LINE#         24
+  C:0197H         LINE#         25
+  C:019DH         LINE#         26
+  C:01A1H         LINE#         29
+  C:01A4H         LINE#         32
+  C:01ABH         LINE#         34
+  C:01ADH         LINE#         35
+  -------         ENDPROC       _INT_EEPROM_WRITEPAGE
+  -------         PROC          _INT_EEPROM_WRITEBYTES
+  D:0052H         SYMBOL        addr
+  D:0053H         SYMBOL        bytes
+  D:0056H         SYMBOL        len
+  -------         DO            
+  D:0057H         SYMBOL        page_remain
+  D:0058H         SYMBOL        ack
+  -------         ENDDO         
+  C:00F7H         LINE#         37
+  C:00FFH         LINE#         38
+  C:00FFH         LINE#         41
+  C:0102H         LINE#         43
+  C:0109H         LINE#         44
+  C:0113H         LINE#         45
+  C:0120H         LINE#         47
+  C:012BH         LINE#         49
+  C:0132H         LINE#         50
+  C:013DH         LINE#         51
+  C:0143H         LINE#         53
+  C:0145H         LINE#         55
+  C:0150H         LINE#         56
+  C:0153H         LINE#         57
+  C:0153H         LINE#         58
+  C:0155H         LINE#         59
+  -------         ENDPROC       _INT_EEPROM_WRITEBYTES
+  -------         PROC          _INT_EEPROM_READBYTES
+  D:0059H         SYMBOL        addr
+  D:005AH         SYMBOL        bytes
+  D:005DH         SYMBOL        len
+  -------         DO            
+  D:005EH         SYMBOL        ack
+  D:005FH         SYMBOL        i
+  -------         ENDDO         
+  C:008FH         LINE#         62
+  C:0097H         LINE#         63
+  C:0097H         LINE#         64
+  C:009AH         LINE#         68
+  C:009DH         LINE#         71
+  C:00A2H         LINE#         72
+  C:00A8H         LINE#         75
+  C:00ADH         LINE#         76
+  C:00B3H         LINE#         79
+  C:00B6H         LINE#         81
+  C:00BBH         LINE#         82
+  C:00C1H         LINE#         84
+  C:00CBH         LINE#         85
+  C:00DEH         LINE#         86
+  C:00EDH         LINE#         87
+  C:00F1H         LINE#         89
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 6
+
+
+  C:00F4H         LINE#         91
+  C:00F6H         LINE#         92
+  -------         ENDPROC       _INT_EEPROM_READBYTES
+  -------         ENDMOD        INT_EEPROM
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0300H         PUBLIC        _Delay
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0005H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0300H         LINE#         1
+  C:0300H         LINE#         2
+  C:0300H         LINE#         4
+  C:0304H         LINE#         5
+  C:0304H         LINE#         6
+  C:0306H         LINE#         7
+  C:0308H         LINE#         9
+  C:0308H         LINE#         10
+  C:030AH         LINE#         11
+  C:030CH         LINE#         13
+  C:0311H         LINE#         14
+  C:0313H         LINE#         15
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        MATRIXLED
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  C:0242H         PUBLIC        __74HC595_WriteByte
+  D:00B0H         PUBLIC        P3
+  B:00B0H.5       PUBLIC        _RCLK
+  B:00B0H.4       PUBLIC        _SER
+  B:00B0H.6       PUBLIC        _SRCLK
+  C:033AH         PUBLIC        MatrixLED_init
+  C:02C4H         PUBLIC        _MatrixLED_ShowColIndex
+  -------         PROC          MATRIXLED_INIT
+  C:033AH         LINE#         10
+  C:033AH         LINE#         11
+  C:033AH         LINE#         12
+  C:033CH         LINE#         13
+  C:033EH         LINE#         14
+  -------         ENDPROC       MATRIXLED_INIT
+  -------         PROC          __74HC595_WRITEBYTE
+  D:0005H         SYMBOL        byte
+  -------         DO            
+  D:0003H         SYMBOL        i
+  -------         ENDDO         
+  C:0242H         LINE#         16
+  C:0244H         LINE#         17
+  C:0244H         LINE#         19
+  C:0246H         LINE#         20
+  C:0262H         LINE#         21
+  C:0264H         LINE#         22
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/15/2024  10:41:46  PAGE 7
+
+
+  C:0266H         LINE#         23
+  C:026AH         LINE#         24
+  C:026CH         LINE#         25
+  C:026EH         LINE#         26
+  -------         ENDPROC       __74HC595_WRITEBYTE
+  -------         PROC          _MATRIXLED_SHOWCOLINDEX
+  D:0004H         SYMBOL        colIndex
+  D:0006H         SYMBOL        byte
+  C:02C4H         LINE#         30
+  C:02C8H         LINE#         31
+  C:02C8H         LINE#         32
+  C:02CDH         LINE#         34
+  C:02DDH         LINE#         36
+  C:02E4H         LINE#         37
+  C:02E7H         LINE#         38
+  -------         ENDPROC       _MATRIXLED_SHOWCOLINDEX
+  -------         ENDMOD        MATRIXLED
+
+  -------         MODULE        ?C?CLDOPTR
+  C:01AEH         PUBLIC        ?C?CLDOPTR
+  -------         ENDMOD        ?C?CLDOPTR
+
+  -------         MODULE        ?C?CSTOPTR
+  C:01DBH         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_INT_EEPROM_WRITEBYTES?INT_EEPROM
+
+Program Size: data=97.0 xdata=0 code=831
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -2,10 +2,11 @@
 #include "Delay.h"
 #include "Timer0.h"
 
-sbit Buzzer = P1^5;
+//蜂鸣器端口定义
+sbit Buzzer = P2^5;
 
-//播放速度，值为四分音符的时长（ms）
-#define SPEED 500
+//播放速度，值为四分音符的时长(ms)
+#define SPEED	500
 
 //音符与索引对应表，P：休止符，L：低音，M：中音，H：高音，下划线：升半音符号#
 #define P	0
@@ -54,7 +55,7 @@ unsigned int FreqTable[]={
 	65058,65085,65110,65134,65157,65178,65198,65217,65235,65252,65268,65283,
 };
 
-//乐谱 - 天空之城
+//乐谱
 unsigned char code Music[]={
 	//音符,时值,
 	
@@ -231,7 +232,7 @@ unsigned char FreqSelect, MusicSelect;
 
 void main()
 {
-	Timer0Init();
+	Timer0_Init();
 	
 	while(1)
 	{
@@ -259,9 +260,11 @@ void Timer0_Routine() interrupt 1
 {
 	if(FreqTable[FreqSelect])	//如果不是休止符
 	{
+		P2_0 = ~P2_0;
 		/*取对应频率值的重装载值到定时器*/
 		TL0 = FreqTable[FreqSelect]%256;		//设置定时初值
 		TH0 = FreqTable[FreqSelect]/256;		//设置定时初值
 		Buzzer=!Buzzer;	//翻转蜂鸣器IO口
 	}
+
 }

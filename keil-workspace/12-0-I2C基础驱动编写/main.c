@@ -1,5 +1,8 @@
 #include <REGX52.H>
 
+sbit SCL = P2^1;
+sbit SDA = P2^0;
+
 void Dir_IIC_Start()
 {
 	//初始 将两个信号拉高

@@ -1,0 +1,7 @@
+".\Objects\main.obj",
+".\Objects\Dri_IIC.obj",
+".\Objects\Int_EEPROM.obj",
+".\Objects\Delay.obj",
+".\Objects\MatrixLED.obj" 
+TO ".\Objects\project" 
+PRINT(".\Listings\project.m51") RAMSIZE(256) 
