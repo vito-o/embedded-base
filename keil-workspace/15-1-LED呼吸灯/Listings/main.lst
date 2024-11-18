@@ -1,0 +1,59 @@
+C51 COMPILER V9.54   MAIN                                                                  11/18/2024 14:40:55 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\main.lst) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          sbit LED = P2^0;
+   4          
+   5          void Delay(unsigned char n)
+   6          {
+   7   1        while(n--);
+   8   1      }
+   9          
+  10          void main() 
+  11          {
+  12   1        unsigned char time, i;
+  13   1        
+  14   1        while(1)
+  15   1        {
+  16   2          for(time = 0; time < 100; time++) {
+  17   3            for(i = 0; i < 20; i++) {
+  18   4              LED = 0;
+  19   4              Delay(time);
+  20   4              LED = 1;
+  21   4              Delay(100-time);
+  22   4            }
+  23   3          }
+  24   2          
+  25   2          for(time = 100; time > 0; time--) {
+  26   3            for(i = 0; i < 20; i++) {
+  27   4              LED = 0;
+  28   4              Delay(time);
+  29   4              LED = 1;
+  30   4              Delay(100-time);
+  31   4            }
+  32   3          }
+  33   2        }
+  34   1        
+  35   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     56    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

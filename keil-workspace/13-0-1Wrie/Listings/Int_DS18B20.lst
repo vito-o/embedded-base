@@ -1,0 +1,57 @@
+C51 COMPILER V9.54   INT_DS18B20                                                           11/17/2024 11:30:54 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE INT_DS18B20
+OBJECT MODULE PLACED IN .\Objects\Int_DS18B20.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE Int_DS18B20.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\
+                    -Listings\Int_DS18B20.lst) TABS(2) OBJECT(.\Objects\Int_DS18B20.obj)
+
+line level    source
+
+   1          #include "Dir_1Wrie.h"
+   2          #include "Delay.h"
+   3          #include <REGX52.H>
+   4          
+   5          float Int_DS18B20_GetTemperature()
+   6          {
+   7   1        int Temp;
+   8   1        unsigned char ls_byte;
+   9   1        unsigned char ms_byte;
+  10   1        
+  11   1        //初始化
+  12   1        Dir_1Wire_Init();
+  13   1        //发送ROM命令
+  14   1        Dir_1Wire_WriteByte(0xCC);
+  15   1        //发送测温命令
+  16   1        Dir_1Wire_WriteByte(0x44);
+  17   1        
+  18   1        Delay(1000);
+  19   1        
+  20   1        //初始化
+  21   1        Dir_1Wire_Init();
+  22   1        //发送ROM命令
+  23   1        Dir_1Wire_WriteByte(0xCC);
+  24   1        //发送读取命令
+  25   1        Dir_1Wire_WriteByte(0xBE);
+  26   1        
+  27   1        ls_byte = Dir_1Wire_ReadByte();
+  28   1        ms_byte = Dir_1Wire_ReadByte();
+  29   1        
+  30   1      //  return (ls_byte >> 4) | (ms_byte << 4);
+  31   1        Temp = (ms_byte << 8) | ls_byte; 
+  32   1        return Temp/16.0;
+  33   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     64    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

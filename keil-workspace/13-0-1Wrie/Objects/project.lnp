@@ -1,0 +1,9 @@
+".\Objects\Delay.obj",
+".\Objects\Dir_1Wrie.obj",
+".\Objects\Int_DS18B20.obj",
+".\Objects\LCD1602.obj",
+".\Objects\main.obj",
+".\Objects\Timer0.obj",
+".\Objects\Key.obj" 
+TO ".\Objects\project" 
+PRINT(".\Listings\project.m51") RAMSIZE(256) 

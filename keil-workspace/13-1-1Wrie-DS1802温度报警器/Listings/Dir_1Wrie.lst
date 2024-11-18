@@ -1,0 +1,99 @@
+C51 COMPILER V9.54   DIR_1WRIE                                                             11/17/2024 11:51:48 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE DIR_1WRIE
+OBJECT MODULE PLACED IN .\Objects\Dir_1Wrie.obj
+COMPILER INVOKED BY: D:\software\Keil\C51\BIN\C51.EXE Dir_1Wrie.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Li
+                    -stings\Dir_1Wrie.lst) TABS(2) OBJECT(.\Objects\Dir_1Wrie.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          sbit DQ = P3^7;
+   5          
+   6          unsigned char Dir_1Wire_Init()
+   7          {
+   8   1        unsigned char result;
+   9   1        unsigned char i;
+  10   1        EA=0;
+  11   1        
+  12   1        DQ = 1;
+  13   1        
+  14   1        
+  15   1        DQ = 0;
+  16   1        //延时500us
+  17   1        i = 247;while (--i);    //Delay 500us
+  18   1        DQ = 1;
+  19   1        
+  20   1        // 延时70us
+  21   1        i = 32;while (--i);     //Delay 70us
+  22   1        result = ~DQ;
+  23   1        
+  24   1        // 延时420us
+  25   1        i = 247;while (--i);    //Delay 500us
+  26   1        EA=1;
+  27   1        return result;
+  28   1      }
+  29          
+  30          void Dir_1Wire_WriteByte(unsigned char byte)
+  31          {
+  32   1        unsigned char i;
+  33   1        unsigned char j;
+  34   1        for (i = 0; i < 8; i++) {
+  35   2          EA=0;
+  36   2          
+  37   2          DQ = 0;
+  38   2          j = 4;while (--j);      //Delay 10us
+  39   2          DQ = byte & 0x01;
+  40   2          byte >>= 1;
+  41   2          // 延时50us
+  42   2          j = 24;while (--j);     //Delay 50us
+  43   2          DQ = 1;
+  44   2          
+  45   2          EA=1;
+  46   2        }
+  47   1      }
+  48          
+  49          unsigned char Dir_1Wire_ReadByte()
+  50          {
+  51   1        unsigned char byte = 0x00;
+  52   1        unsigned char j;
+  53   1        
+  54   1        unsigned char i;
+C51 COMPILER V9.54   DIR_1WRIE                                                             11/17/2024 11:51:48 PAGE 2   
+
+  55   1        for (i = 0; i < 8; i++) {
+  56   2          EA=0;
+  57   2          
+  58   2          DQ = 0;
+  59   2          j = 2;while (--j);      //Delay 5us
+  60   2          DQ = 1;
+  61   2          j = 2;while (--j);      //Delay 5us
+  62   2          
+  63   2          byte >>=1;
+  64   2          if (DQ == 1) {
+  65   3            byte |= 0x80;
+  66   3          }
+  67   2          j = 24;while (--j);
+  68   2          
+  69   2          EA=1;
+  70   2        }
+  71   1        
+  72   1        return byte;
+  73   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    100    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
