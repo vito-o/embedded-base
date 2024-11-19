@@ -1,0 +1,11 @@
+".\Objects\Delay.obj",
+".\Objects\Key.obj",
+".\Objects\main.obj",
+".\Objects\Nixie.obj",
+".\Objects\Timer1.obj",
+".\Objects\Motor.obj",
+".\Objects\Int0.obj",
+".\Objects\IR.obj",
+".\Objects\Timer0.obj" 
+TO ".\Objects\project" 
+PRINT(".\Listings\project.m51") RAMSIZE(256) 
