@@ -27,7 +27,40 @@ int main()
 	//4.死循环保持状态
 	//  while(1);
 	
+	// 优化一，对其他位不变
+		RCC->APB2ENR = 0x00000010; //时钟配置，开启APB2模块
+		GPIOC->CRH = 0x00300000;
+	//GPIOC->ODR = 0x00000000;
+		GPIOC->ODR = 0x00002000;
+	
+	// 优化二
+	// 置0位与  置1位或
+		RCC->APB2ENR = 0x00000010;
+		
+										0x00300000;
+	                  0000 0000, 0011 0000, 0000 0000, 0000 0000	
+										一位一位移动
+		GPIOC->CRH |= (1 << 20);
+		GPIOC->CRH |= (1 << 21);
+		等价于
+		GPIOC->CRH |= (1 << 20) | (1 << 21);
+		
+										0x00002000;
+										0000 0000, 0000 0000, 0010 0000, 0000 0000	
+		GPIOC->ODR |= (1 << 13);
+		
+										GPIOC->ODR = 0x00000000;
+										0000 0000, 0000 0000, 0010 0000, 0000 0000 //13位置0
+		GPIOC->ODR &= ~(1 << 13);
+		
+		
+	// 优化三
+		RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;	
+		GPIOC->CRH &= ~GPIO_CRH_CNF13
+		GPIOC->CRH |= GPIO_CRH_MODE13;
+		GPIOC->ODR |= GPIO_ODR_ODR13;
 	*/
+	
 	
 	//时钟配置， 不同模块可以配置不同时钟，不给时钟不耗电
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC, ENABLE);

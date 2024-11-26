@@ -19,6 +19,6 @@ int main()
 		GPIO_SetBits(GPIOB, GPIO_Pin_12);
 		Delay_ms(100);
 		GPIO_SetBits(GPIOB, GPIO_Pin_12);
-		Delay_ms(700);
+		Delay_ms(100);
 	}
 }
