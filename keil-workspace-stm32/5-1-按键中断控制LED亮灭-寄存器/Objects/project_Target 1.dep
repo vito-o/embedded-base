@@ -1,43 +1,0 @@
-Dependencies for Project 'project', Target 'Target 1': (DO NOT MODIFY !)
-CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
-F (.\Start\core_cm3.c)(0x4C0C587E)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\core_cm3.o --omf_browse .\objects\core_cm3.crf --depend .\objects\core_cm3.d)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-F (.\Start\core_cm3.h)(0x4D523B58)()
-F (.\Start\startup_stm32f10x_md.s)(0x4D783CD2)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include--pd "__UVISION_VERSION SETA 536" --pd "STM32F10X_MD SETA 1"--list .\listings\startup_stm32f10x_md.lst --xref -o .\objects\startup_stm32f10x_md.o --depend .\objects\startup_stm32f10x_md.d)
-F (.\Start\stm32f10x.h)(0x6745ECE2)()
-F (.\Start\system_stm32f10x.c)(0x4D783CB0)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
-I (Start\stm32f10x.h)(0x6745ECE2)
-I (Start\core_cm3.h)(0x4D523B58)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (Start\system_stm32f10x.h)(0x4D783CAA)
-F (.\Start\system_stm32f10x.h)(0x4D783CAA)()
-F (.\User\main.c)(0x6745EF3B)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (.\Hardware\led\led.h)(0x6745EF6D)
-I (.\Start\stm32f10x.h)(0x6745ECE2)
-I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (.\Start\system_stm32f10x.h)(0x4D783CAA)
-I (.\Hardware\key\key.h)(0x6745EE19)
-I (.\User\delay.h)(0x6743F151)
-F (.\User\delay.c)(0x6743F015)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
-I (User\delay.h)(0x6743F151)
-I (.\Start\stm32f10x.h)(0x6745ECE2)
-I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (.\Start\system_stm32f10x.h)(0x4D783CAA)
-F (.\User\delay.h)(0x6743F151)()
-F (.\Hardware\led\led.c)(0x6745E57E)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\led.o --omf_browse .\objects\led.crf --depend .\objects\led.d)
-I (Hardware\led\led.h)(0x6745EF6D)
-I (.\Start\stm32f10x.h)(0x6745ECE2)
-I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (.\Start\system_stm32f10x.h)(0x4D783CAA)
-F (.\Hardware\led\led.h)(0x6745EF6D)()
-F (.\Hardware\key\Key.c)(0x6745F570)(--c99 -c --cpu Cortex-M3 -D__EVAL -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Hardware\led -I .\Hardware\key-ID:\software\Keil\ARM\PACK\Keil\STM32F1xx_DFP\2.2.0\Device\Include-D__UVISION_VERSION="536" -DSTM32F10X_MD-o .\objects\key.o --omf_browse .\objects\key.crf --depend .\objects\key.d)
-I (Hardware\key\key.h)(0x6745EE19)
-I (.\Start\stm32f10x.h)(0x6745ECE2)
-I (.\Start\core_cm3.h)(0x4D523B58)
-I (D:\software\Keil\ARM\ARMCC\include\stdint.h)(0x6025237E)
-I (.\Start\system_stm32f10x.h)(0x4D783CAA)
-I (.\User\delay.h)(0x6743F151)
-I (.\Hardware\led\led.h)(0x6745EF6D)
