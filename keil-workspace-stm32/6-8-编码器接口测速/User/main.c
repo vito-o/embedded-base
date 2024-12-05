@@ -3,7 +3,7 @@
 #include "Timer.h"
 #include "Encoder.h"
 
-uint16_t speed;
+int16_t speed;
 
 int main()
 {
@@ -15,7 +15,7 @@ int main()
 	
 	while(1)
 	{
-		OLED_ShowSignedNum(1, 6, speed, 5);
+		OLED_ShowSignedNum(1, 7, speed, 5);
 	}
 }
 
