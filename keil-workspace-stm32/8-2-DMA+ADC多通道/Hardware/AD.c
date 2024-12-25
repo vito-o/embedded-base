@@ -40,7 +40,7 @@ void AD_init(void)
 	DMA_InitTypeStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;	// 外设数据宽度，选择字节
 	DMA_InitTypeStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;								// 外设地址不自增
 	DMA_InitTypeStructure.DMA_MemoryBaseAddr = (uint32_t)AD_Value;									// 存储器基地址
-	DMA_InitTypeStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;			// 存储器数据宽度，选择字节
+	DMA_InitTypeStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;					// 存储器数据宽度，选择字节
 	DMA_InitTypeStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;											// 存储器地址自增
 	DMA_InitTypeStructure.DMA_Mode = DMA_Mode_Circular;															// 循环模式，与adc的连续转换一致
 	DMA_InitTypeStructure.DMA_BufferSize = 4;																				// 运转的数据大小（转运次数）
