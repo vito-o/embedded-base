@@ -1,0 +1,25 @@
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\software\Keil\ARM\ARMCC\Bin'
+Build target 'FreeRTOS_temp_HAL'
+compiling freertos_demo.c...
+..\Core\Src\freertos_demo.c(46): warning:  #223-D: function "printf" declared implicitly
+      printf("timer1 one-time timer successfully created...\r\n");
+..\Core\Src\freertos_demo.c(58): warning:  #223-D: function "printf" declared implicitly
+      printf("timer2 the periodic timer has been successfully created...\r\n");
+..\Core\Src\freertos_demo.c(117): warning:  #223-D: function "printf" declared implicitly
+          printf("timer1 started successfully...\r\n");
+..\Core\Src\freertos_demo.c(123): warning:  #223-D: function "printf" declared implicitly
+          printf("timer2 started successfully...\r\n");
+..\Core\Src\freertos_demo.c(132): warning:  #223-D: function "printf" declared implicitly
+          printf("timer1 stopped successfully...\r\n");
+..\Core\Src\freertos_demo.c(138): warning:  #223-D: function "printf" declared implicitly
+          printf("timer2 stopped successfully...\r\n");
+..\Core\Src\freertos_demo.c(150): warning:  #223-D: function "printf" declared implicitly
+    printf("timer1 timeout callback %d times...\r\n", timer1_count++);
+..\Core\Src\freertos_demo.c(156): warning:  #223-D: function "printf" declared implicitly
+    printf("timer2 timeout callback %d times...\r\n", timer2_count++);
+..\Core\Src\freertos_demo.c: 8 warnings, 0 errors
+linking...
+Program Size: Code=11608 RO-data=312 RW-data=156 ZI-data=18820  
+FromELF: creating hex file...
+"FreeRTOS_temp_HAL\FreeRTOS_temp_HAL.axf" - 0 Error(s), 8 Warning(s).
+Build Time Elapsed:  00:00:02

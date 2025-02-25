@@ -1,0 +1,15 @@
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\software\Keil\ARM\ARMCC\Bin'
+Build target 'FreeRTOS_temp_HAL'
+compiling freertos_demo.c...
+../Core/Inc/FreeRTOSConfig.h(94): warning:  #47-D: incompatible redefinition of macro "configUSE_TRACE_FACILITY"  (declared at line 51)
+  #define configUSE_TRACE_FACILITY 1
+..\Core\Src\freertos_demo.c(97): warning:  #223-D: function "printf" declared implicitly
+          printf("task1 successfily send notify to task2 ");
+..\Core\Src\freertos_demo.c(113): warning:  #223-D: function "printf" declared implicitly
+      printf("task2 is running\n");
+..\Core\Src\freertos_demo.c: 3 warnings, 0 errors
+linking...
+Program Size: Code=9244 RO-data=312 RW-data=128 ZI-data=18776  
+FromELF: creating hex file...
+"FreeRTOS_temp_HAL\FreeRTOS_temp_HAL.axf" - 0 Error(s), 3 Warning(s).
+Build Time Elapsed:  00:00:02

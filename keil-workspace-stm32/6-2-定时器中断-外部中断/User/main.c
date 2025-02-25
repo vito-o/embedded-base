@@ -1,7 +1,7 @@
 #include "stm32f10x.h"                  // Device header
 #include "OLED.h"
 #include "Timer.h"
-
+// 6-2 定时器外部时钟， 将对射式红外传感器当作时钟
 uint16_t num;
 
 int main()

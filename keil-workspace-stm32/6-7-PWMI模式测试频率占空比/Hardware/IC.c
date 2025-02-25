@@ -1,6 +1,6 @@
 #include "IC.h"
 // GPIOA pin_6 接收pwm波形
-
+// 通过在PWM模块中生成一个pwm波形，然后在当前模块接收波形，然后计算出当前波形
 /*
 CK_PSC 时钟频率
 PSC 预分频器
@@ -49,10 +49,10 @@ void IC_init(void)
 	
 	// 时基单元初始化
 	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;
-	TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;			// 时钟分频，选择不分频，此参数用于配置滤波器时钟，不影响时基单元使用
-	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up; // 计数器模式，选择向上计数
-	TIM_TimeBaseInitStructure.TIM_Period = 65536 - 1;								// 计数周期，即ARR的值 ARR：（Auto-Reload Register，自动重装载寄存器） ARR 是定时器的最大计数值。
-	TIM_TimeBaseInitStructure.TIM_Prescaler = 72 - 1;								// 预分频器，即PSC的值
+	TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;					// 时钟分频，选择不分频，此参数用于配置滤波器时钟，不影响时基单元使用
+	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up; 		// 计数器模式，选择向上计数
+	TIM_TimeBaseInitStructure.TIM_Period = 65536 - 1;										// 计数周期，即ARR的值 ARR：（Auto-Reload Register，自动重装载寄存器） ARR 是定时器的最大计数值。
+	TIM_TimeBaseInitStructure.TIM_Prescaler = 72 - 1;										// 预分频器，即PSC的值
 	TIM_TimeBaseInitStructure.TIM_RepetitionCounter = 0;
 	TIM_TimeBaseInit(TIM3, &TIM_TimeBaseInitStructure);
 	
@@ -71,13 +71,13 @@ void IC_init(void)
 	TIM_SelectSlaveMode(TIM3, TIM_SlaveMode_Reset);											// 从模式选择复位， 即TI1产生上升沿时，会触发CNT归零
 																																					
 	// TIM使能
-	TIM_Cmd(TIM3, ENABLE);																						// TIM2,定时器开始运行
+	TIM_Cmd(TIM3, ENABLE);																							// TIM2,定时器开始运行
 }
 
 // 获取输入捕获的频率
 uint16_t IC_GetFreq(void)
 {
-	return 1000000 / (TIM_GetCapture1(TIM3)+1);											// 测周法得到频率fx = fc / N，这里不执行+1操作也可以
+	return 1000000 / (TIM_GetCapture1(TIM3)+1);													// 测周法得到频率fx = fc / N，这里不执行+1操作也可以
 }
 
 uint16_t IC_GetDuty(void)

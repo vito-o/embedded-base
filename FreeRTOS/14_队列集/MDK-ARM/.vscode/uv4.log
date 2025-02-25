@@ -1,0 +1,49 @@
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\software\Keil\ARM\ARMCC\Bin'
+Build target 'FreeRTOS_temp_HAL'
+compiling croutine.c...
+compiling list.c...
+compiling event_groups.c...
+compiling stream_buffer.c...
+compiling queue.c...
+compiling timers.c...
+compiling heap_4.c...
+compiling tasks.c...
+compiling port.c...
+compiling stm32f1xx_it.c...
+compiling freertos_demo.c...
+..\Core\Src\freertos_demo.c(47): warning:  #223-D: function "printf" declared implicitly
+      printf("queue1 create success\r\n");
+..\Core\Src\freertos_demo.c(51): warning:  #223-D: function "printf" declared implicitly
+      printf("queue1 create failed\r\n");
+..\Core\Src\freertos_demo.c(58): warning:  #223-D: function "printf" declared implicitly
+      printf("sem_handle create success\r\n");
+..\Core\Src\freertos_demo.c(62): warning:  #223-D: function "printf" declared implicitly
+      printf("sem_handle create failed\r\n");
+..\Core\Src\freertos_demo.c(69): warning:  #223-D: function "printf" declared implicitly
+      printf("queue_set_handle create success\r\n");
+..\Core\Src\freertos_demo.c(76): warning:  #223-D: function "printf" declared implicitly
+      printf("queue1 add to queue_set_handle success\r\n");
+..\Core\Src\freertos_demo.c(82): warning:  #223-D: function "printf" declared implicitly
+      printf("sem_handle add to queue_set_handle success\r\n");
+..\Core\Src\freertos_demo.c(148): warning:  #223-D: function "printf" declared implicitly
+          printf("send key data [%d] to queue1 success\r\n", key);
+..\Core\Src\freertos_demo.c(152): warning:  #223-D: function "printf" declared implicitly
+          printf("send key data to queue1 failed\r\n");
+..\Core\Src\freertos_demo.c(160): warning:  #223-D: function "printf" declared implicitly
+          printf("Give sem success\r\n");
+..\Core\Src\freertos_demo.c(164): warning:  #223-D: function "printf" declared implicitly
+          printf("Give sem failed\r\n");
+..\Core\Src\freertos_demo.c(189): warning:  #223-D: function "printf" declared implicitly
+          printf("task2 receive key data [%d] from queue1 success\r\n", receive);
+..\Core\Src\freertos_demo.c(193): warning:  #223-D: function "printf" declared implicitly
+          printf("task2 receive key data from queue1 failed\r\n");
+..\Core\Src\freertos_demo.c(201): warning:  #223-D: function "printf" declared implicitly
+          printf("task2 take sem success\r\n");
+..\Core\Src\freertos_demo.c(206): warning:  #223-D: function "printf" declared implicitly
+        printf("failed to retrieve information from queue set");
+..\Core\Src\freertos_demo.c: 15 warnings, 0 errors
+linking...
+Program Size: Code=11156 RO-data=312 RW-data=140 ZI-data=18780  
+FromELF: creating hex file...
+"FreeRTOS_temp_HAL\FreeRTOS_temp_HAL.axf" - 0 Error(s), 15 Warning(s).
+Build Time Elapsed:  00:00:02
